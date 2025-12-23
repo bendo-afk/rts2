@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu4nowuyxtbb7"]
+
+[ext_resource type="Script" uid="uid://by7xgighsmmpb" path="res://scripts/tile_map_layer.gd" id="1_wipo8"]
+
+[node name="TileMapLayer" type="TileMapLayer"]
+script = ExtResource("1_wipo8")
