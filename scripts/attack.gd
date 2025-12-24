@@ -31,5 +31,5 @@ func calc_rel_target_pos(unit_pos: Vector2, global_target_pos: Vector2) -> Vecto
 
 func rotate_turret(rel_target_pos: Vector2, delta: float) -> void:
 	var to_angle := rel_target_pos.angle()
-	turret_angle = rotate_toward(turret_angle, to_angle, delta)
+	turret_angle = rotate_toward(turret_angle, to_angle, traverse_speed * PI * delta)
 	

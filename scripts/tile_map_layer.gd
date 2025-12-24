@@ -2,6 +2,8 @@ extends TileMapLayer
 
 var hsize: int = 128
 var vsize: int = 148
+var MAX := 4
+var MIN := 0
 @onready var teximage: Resource = preload("res://prepaired_data/images/EDGE2_128.png")
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -81,3 +83,29 @@ func map_to_local_array(map_2i_array: PackedVector2Array) -> PackedVector2Array:
 	for i in array_size:
 		local_packedarray[i] = map_to_local(map_2i_array[i])
 	return local_packedarray
+
+func change_height(height_action: HeightAction) -> void:
+	var diff: int
+	if height_action.is_raise:
+		diff = 1
+	else:
+		diff = -1 
+	set_cell(height_action.tile, get_cell_source_id(height_action.tile) + diff, Vector2i(0,0), 0)
+	setup_astar()
+
+func can_change_height(tile: Vector2i, is_raise: bool) -> bool:
+	var h: int = get_cell_source_id(tile)
+	return not ((is_raise and h == MAX) or (!is_raise and h == MIN))
+
+func is_movable_adjacent(tile1: Vector2i, tile2: Vector2i) -> bool:
+	var path_2i: PackedVector2Array = calc_path(tile1, tile2)
+	if path_2i.size() == 2:
+		return true
+	return false
+
+func pos_to_tile(pos: Vector2) -> Vector2i:
+	return local_to_map(pos)
+
+func pos_to_height(pos: Vector2) -> int:
+	var tile: Vector2i = local_to_map(pos)
+	return get_cell_source_id(tile)

@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://c785ctrncl2wo"]
+
+[ext_resource type="Script" uid="uid://e023paag1mx7" path="res://scripts/world.gd" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://nidwgcdkmugm" path="res://scripts/units.gd" id="2_71j4m"]
+[ext_resource type="Script" uid="uid://dyvws57amc2rv" path="res://scripts/vision_system.gd" id="2_k0juu"]
+[ext_resource type="PackedScene" uid="uid://bu4nowuyxtbb7" path="res://scenes/tile_map_layer.tscn" id="2_rwgxs"]
+[ext_resource type="Script" uid="uid://cbuqelakd3rjy" path="res://scripts/height_system.gd" id="3_4wyf3"]
+[ext_resource type="Script" uid="uid://dtbr1enlukinv" path="res://scripts/system_class.gd" id="5_qfnet"]
+[ext_resource type="Script" uid="uid://djh4m2gnn4wi" path="res://scripts/move_system.gd" id="7_i7141"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_nnsk1")
+
+[node name="Units" type="Node" parent="."]
+script = ExtResource("2_71j4m")
+
+[node name="TileMapLayer" parent="." instance=ExtResource("2_rwgxs")]
+
+[node name="HeightSystem" type="Node" parent="."]
+script = ExtResource("3_4wyf3")
+metadata/_custom_type_script = "uid://dtbr1enlukinv"
+
+[node name="VisionSystem" type="Node" parent="."]
+script = ExtResource("2_k0juu")
+metadata/_custom_type_script = "uid://dtbr1enlukinv"
+
+[node name="ScoreSystem" type="Node" parent="."]
+script = ExtResource("5_qfnet")
+metadata/_custom_type_script = "uid://dtbr1enlukinv"
+
+[node name="MoveSystem" type="Node" parent="."]
+script = ExtResource("7_i7141")
+metadata/_custom_type_script = "uid://dtbr1enlukinv"
+
+[node name="ShootSystem" type="Node" parent="."]
+script = ExtResource("5_qfnet")
+metadata/_custom_type_script = "uid://dtbr1enlukinv"
