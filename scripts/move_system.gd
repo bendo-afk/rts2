@@ -1,6 +1,6 @@
 extends System
 
-var units: Node
+var units: Array[Unit]
 var map: TileMapLayer
 
 func physics(delta: float) -> void:

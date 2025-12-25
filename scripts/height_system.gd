@@ -1,12 +1,13 @@
 extends System
 
-var units: Node
+var units: Array[Unit]
 var map: TileMapLayer
 
 var teams: Array
 
-func try_start(unit: Unit, tile: Vector2i, is_raise: bool) -> void:
+func try_start(unit: Unit, pos: Vector2, is_raise: bool) -> void:
 	var team: Team = unit.team
+	var tile := map.local_to_map(pos)
 	if not team.can_start_height_action():
 		return
 	if not can_unit_change_height(unit, tile, is_raise):

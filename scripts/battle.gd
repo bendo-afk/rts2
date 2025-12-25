@@ -1,14 +1,12 @@
 extends Node2D
 
 @onready var world := $World
-@onready var unit_manager := $UnitManager
 @onready var input_controller := $InputController
 
-@export var unit_scene: PackedScene
-
 func _ready() -> void:
-	var unit := unit_scene.instantiate()
-	unit.position = world.map.map_to_local(Vector2i.ZERO)
-	unit_manager.add_child(unit)
+	connect_inputs()
+
+func connect_inputs() -> void:
+	input_controller.drag.released.connect(world.ex_con.select_by_box)
 	
-	input_controller.unit_manager = unit_manager
+	input_controller.click.right_clicked.connect(world.ex_con.set_path)

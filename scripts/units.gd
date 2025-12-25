@@ -1,5 +1,3 @@
 extends Node
 
-
-var ally := Team.new()
-var enemy := Team.new()
+var units: Array[Unit]

@@ -1,27 +1,27 @@
 [gd_scene load_steps=7 format=3 uid="uid://csun7mfp03fq5"]
 
 [ext_resource type="Script" uid="uid://dwui6mrp30ufh" path="res://scripts/battle.gd" id="1_dn72j"]
-[ext_resource type="PackedScene" uid="uid://b4yk8f1r8bh6v" path="res://scenes/unit.tscn" id="2_lpir7"]
 [ext_resource type="PackedScene" uid="uid://c785ctrncl2wo" path="res://scenes/world.tscn" id="2_th188"]
 [ext_resource type="Script" uid="uid://cmun2p06tmpee" path="res://scripts/camera_2d.gd" id="3_p1qf1"]
 [ext_resource type="Script" uid="uid://btecjvnhghcbu" path="res://scripts/input_controller.gd" id="5_4k1nj"]
-[ext_resource type="Script" uid="uid://bgn3ujrio6w0g" path="res://scripts/selection_manager.gd" id="5_6vh42"]
+[ext_resource type="Script" uid="uid://bgn3ujrio6w0g" path="res://scripts/drag.gd" id="5_6vh42"]
+[ext_resource type="Script" uid="uid://odsx116bsqo" path="res://scripts/click.gd" id="5_f4pi3"]
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_dn72j")
-unit_scene = ExtResource("2_lpir7")
 
 [node name="World" parent="." instance=ExtResource("2_th188")]
 
 [node name="InputController" type="Node" parent="."]
 script = ExtResource("5_4k1nj")
 
-[node name="SelectionManager" type="Node2D" parent="InputController"]
+[node name="Drag" type="Node2D" parent="InputController"]
 script = ExtResource("5_6vh42")
 
-[node name="MoveCommand" type="Node" parent="InputController"]
+[node name="Click" type="Node2D" parent="InputController"]
+script = ExtResource("5_f4pi3")
 
-[node name="AimCommand" type="Node" parent="InputController"]
+[node name="Keyboard" type="Node" parent="InputController"]
 
 [node name="UI" type="CanvasLayer" parent="."]
 

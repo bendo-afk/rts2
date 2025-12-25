@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4yk8f1r8bh6v"]
+[gd_scene load_steps=9 format=3 uid="uid://b4yk8f1r8bh6v"]
 
 [ext_resource type="Script" uid="uid://gfy273vsftmf" path="res://scripts/unit.gd" id="1_o7ajc"]
 [ext_resource type="Script" uid="uid://81omllkgwhmw" path="res://scripts/hp.gd" id="2_k673f"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://buivub2x1eeqt" path="res://scripts/height_action_comp.gd" id="5_tb304"]
 [ext_resource type="Script" uid="uid://td00t7ifg110" path="res://scripts/vision_comp.gd" id="6_e8hdl"]
 [ext_resource type="Script" uid="uid://cgrcjw3qv6hsk" path="res://scripts/sprite_2d.gd" id="6_ruro2"]
+[ext_resource type="Texture2D" uid="uid://cnhgl2yuey5pc" path="res://icon.svg" id="7_oee7j"]
 
 [node name="Unit" type="Node2D"]
 script = ExtResource("1_o7ajc")
@@ -17,7 +18,7 @@ script = ExtResource("2_k673f")
 [node name="AttackComp" type="Node2D" parent="."]
 script = ExtResource("3_1jvru")
 
-[node name="MoveComp" type="Node2D" parent="."]
+[node name="MoveComp" type="Node" parent="."]
 script = ExtResource("4_gic7v")
 
 [node name="HeightActionComp" type="Node2D" parent="."]
@@ -27,4 +28,5 @@ script = ExtResource("5_tb304")
 script = ExtResource("6_e8hdl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("7_oee7j")
 script = ExtResource("6_ruro2")

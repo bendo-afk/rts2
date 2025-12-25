@@ -4,7 +4,7 @@ extends Node2D
 var drag_start: Vector2 = Vector2.ZERO
 var drag_end: Vector2 = Vector2.ZERO
 var dragging: bool = false
-signal released
+signal released(rect: Rect2)
 var rect : Rect2
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -15,7 +15,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		elif dragging:
 			dragging = false
 			queue_redraw()
-			released.emit()
+			released.emit(rect)
 	if event is InputEventMouseMotion and dragging:
 		drag_end = get_local_mouse_position()
 		queue_redraw()

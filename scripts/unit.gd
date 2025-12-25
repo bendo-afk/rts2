@@ -12,7 +12,6 @@ var selected: bool
 @onready var move_comp := $MoveComp
 @onready var height_action_comp := $HeightActionComp
 
-
 # visible status
 var path_2i: PackedVector2Array
 
@@ -38,7 +37,7 @@ func connect_signals() -> void:
 func _on_move_completed() -> void:
 	path_2i.remove_at(0)
 
-func request_height_change(tile: Vector2i, is_raise: bool) -> void:
+func request_height_change(pos: Vector2, is_raise: bool) -> void:
 	if height_action_comp.is_changing or move_comp.moving_weight != 0:
 		return
-	world.height_system.try_start(self, tile, is_raise)
+	world.height_system.try_start(self, pos, is_raise)
