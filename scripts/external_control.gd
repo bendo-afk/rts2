@@ -7,9 +7,14 @@ var teams: Node
 func set_path(click_pos: Vector2) -> void:
 	for u in units:
 		if u.selected and u.team == teams.ally:
-			var from_tile := map.local_to_map(u.position)
 			var to_tile := map.local_to_map(click_pos)
-			u.path_2i = map.calc_path(from_tile, to_tile)
+			if u.move_comp.moving_weight != 0:
+				var added_path_2i: PackedVector2Array = map.calc_path(u.path_2i[1], to_tile)
+				u.path_2i.resize(1)
+				u.path_2i.append_array(added_path_2i)
+			else:
+				var from_tile := map.local_to_map(u.position)
+				u.path_2i = map.calc_path(from_tile, to_tile)
 
 func set_target_pos(click_pos: Vector2) -> void:
 	for u in units:

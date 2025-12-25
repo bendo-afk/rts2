@@ -29,9 +29,8 @@ func setup_units() -> void:
 	var unit := unit_scene.instantiate()
 	unit.team = teams.ally
 	unit.world = self
-	unit.position = map.map_to_local(Vector2i.ZERO)
 	units.add_child(unit)
-	unit.move_comp.speed = 1
+	unit.setup(3, 3, 1, 1, map.map_to_local(Vector2i.ZERO))
 	units.units.append(unit)
 
 func _physics_process(delta: float) -> void:

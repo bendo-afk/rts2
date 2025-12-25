@@ -10,3 +10,5 @@ func connect_inputs() -> void:
 	input_controller.drag.released.connect(world.ex_con.select_by_box)
 	
 	input_controller.click.right_clicked.connect(world.ex_con.set_path)
+	
+	input_controller.click.side1_clicked.connect(world.ex_con.set_target_pos)

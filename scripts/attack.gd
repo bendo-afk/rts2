@@ -15,7 +15,7 @@ var target_pos: Vector2
 func _ready() -> void:
 	left_reload_time = max_reload_time
 
-func pseudo_process(delta: float) -> void:
+func physics(delta: float) -> void:
 	var rel_target_pos := calc_rel_target_pos(get_parent().position, target_pos)
 	rotate_turret(rel_target_pos, delta)
 	left_reload_time = max(0, left_reload_time - delta)
