@@ -9,7 +9,8 @@ var margin_l: float = 0
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("test"):
 		#print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
-		print("state", is_visible(Vector2(224,240.5), map.map_to_local(Vector2i(3,3)), 0, 0))
+		#print("state", is_visible(Vector2(224,240.5), map.map_to_local(Vector2i(3,3)), 0, 0))
+		get_tiles_between(Vector2(281.6, 140.6), map.map_to_local(Vector2i(3,3)))
 
 func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 	var to_tile := map.local_to_map(to_pos)
@@ -33,15 +34,21 @@ func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 	last1 = get_adjacent_tile(cur1, max_index)
 	last2 = get_adjacent_tile(cur1, (max_index + 5) % 6)
 	
+	
+		
+	
 	var tiles := []
-	while true:
+	print(cur1)
+	for i in range(10):
+		print(nexts)
 		tiles.append(cur1)
 		if cur2 != Vector2i(-1, -1):
 			tiles.append(cur2)
 		if cur1 == to_tile:
 			break
-		nexts = []
+		nexts.clear()
 		next_hexas(cur1, cur2, nexts, last1, last2, from_pos, to_pos)
+		#print(i, "after next_hexas", nexts)
 		if cur2 != Vector2i(-1, -1):
 			next_hexas(cur2, cur1, nexts, last1, last2, from_pos, to_pos)
 		last1 = cur1
@@ -55,11 +62,12 @@ func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 
 func next_hexas(cur: Vector2i, cur2: Vector2i, nexts: Array[Vector2i], last1: Vector2i, last2: Vector2i, pos1: Vector2, pos2: Vector2) -> void:
 	var tile: Vector2i
-	
 	for i in range(6):
+		#print(i, nexts)
 		var turn1 := turn(pos1, pos2, get_vertex_pos(cur, i))
 		var turn2 := turn(pos1, pos2, get_vertex_pos(cur, (i+1)%6 ))
-		if (turn1 == 0 or turn2 == 0 or turn1 != turn2):
+		if (turn1 == 0 or turn2 == 0 or (turn1 == -1 and turn2 == 1)):
+			print("i", i, ", ", "turns", turn1, ",", turn2)
 			tile = get_adjacent_tile(cur, i)
 			if (tile != cur and tile != cur2 and (not nexts.has(tile)) and tile != last1 and tile != last2):
 				if nexts.size() == 0:
@@ -80,6 +88,17 @@ func next_hexas(cur: Vector2i, cur2: Vector2i, nexts: Array[Vector2i], last1: Ve
 						nexts.append(tile)
 					elif nexts.size() == 1:
 						nexts.append(tile)
+		if turn1 == 0 and turn2 == 0:
+			nexts.clear()
+			tile = get_adjacent_tile(cur, (i + 1) % 6)
+			if (tile != last1 and tile != last2):
+				nexts.append(tile)
+				#print("in next_hexas and return here", nexts)
+				return
+			tile = get_adjacent_tile(cur, (i + 5) % 6)
+			if (tile != last1 and tile != last2):
+				nexts.append(tile)
+				return
 
 func turn(pos0: Vector2, pos1: Vector2, pos2: Vector2) -> int:
 	var cross := (pos1 - pos0).cross(pos2 - pos0)
@@ -141,15 +160,15 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	if cur1 == to_tile:
 		return CustomEnums.VisibleState.VISIBLE
 	
-	var max_dist: float = 0
-	var max_index: int = 0
-	for i in range(6):
-		var d := to_pos.distance_to(get_vertex_pos(cur1, i))
-		if d > max_dist:
-			max_dist = d
-			max_index = i
-	last1 = get_adjacent_tile(cur1, max_index)
-	last2 = get_adjacent_tile(cur1, (max_index + 5) % 6)
+	#var max_dist: float = 0
+	#var max_index: int = 0
+	#for i in range(6):
+		#var d := to_pos.distance_to(get_vertex_pos(cur1, i))
+		#if d > max_dist:
+			#max_dist = d
+			#max_index = i
+	#last1 = get_adjacent_tile(cur1, max_index)
+	#last2 = get_adjacent_tile(cur1, (max_index + 5) % 6)
 	
 	var tile1 := map.local_to_map(from_pos)
 	var tile2 := map.local_to_map(to_pos)
@@ -161,10 +180,10 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	
 	
 	for i in range(100):
-		print(nexts)
+		#print(nexts)
 		#if i > 90:
 			#print(from_pos)
-		nexts = []
+		nexts.clear()
 		next_hexas(cur1, cur2, nexts, last1, last2, from_pos, to_pos)
 		if cur2 != Vector2i(-1, -1):
 			next_hexas(cur2, cur1, nexts, last1, last2, from_pos, to_pos)
