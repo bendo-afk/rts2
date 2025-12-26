@@ -4,6 +4,7 @@ const NULL := Vector2i(-9999,-9999)
 
 var units: Array[Unit]
 var map: TileMapLayer
+var teams: Node
 # parameter to set
 var margin_s: float = 0
 var margin_l: float = 0
@@ -25,6 +26,18 @@ func _process(_delta: float) -> void:
 		#print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
 		print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
 		#print(get_tiles_between(units[0].position, map.map_to_local(Vector2i(3,3))))
+
+func set_states() -> void:
+	for u in units:
+		u.vision_comp.visible_state = CustomEnums.VisibleState.NOT
+	for a in units:
+		if a.team == teams.ally:
+			for e in units:
+				if e.team == teams.enemy:
+					if not e.vision_comp.visible_state == CustomEnums.VisibleState.VISIBLE:
+						var vis_state := is_visible(a.position, e.position, a.vision_comp.height, e.vision_comp.height)
+						a.vision_comp.visible_state = maxi(a.vision_comp.visible_state, vis_state)
+						e.vision_comp.visible_state = maxi(e.vision_comp.visible_state, vis_state)
 
 func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 	tiles.cur1 = map.local_to_map(pos1)
