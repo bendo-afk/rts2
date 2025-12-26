@@ -11,6 +11,47 @@ func _process(_delta: float) -> void:
 		#print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
 		print("state", is_visible(Vector2(224,240.5), map.map_to_local(Vector2i(3,3)), 0, 0))
 
+func first_step(pos1: Vector2, pos2: Vector2) -> void:
+	var cur := map.local_to_map(pos1)
+	var to_tile := map.local_to_map(pos2)
+	var candidate1 := []
+	var candidate2 := []
+	for i in range(6):
+		var turn1 := turn(pos1, pos2, get_vertex_pos(cur, i))
+		var turn2 := turn(pos1, pos2, get_vertex_pos(cur, (i+1)%6 ))
+		if turn1 == 0 and turn2 == 0:
+			var last1 := cur
+			var last2 := get_adjacent_tile(cur, i)
+			var tile1 := get_adjacent_tile(cur, (i+1)%6)
+			var tile5 := get_adjacent_tile(cur, (i+5)%6)
+			if calc_dist(to_tile, tile1) < calc_dist(to_tile, tile5):
+				cur = tile1
+			else:
+				cur = tile5
+			return
+		elif turn1 * turn2 == -1:
+			if candidate1.size() == 0:
+				candidate1.append(get_adjacent_tile(cur, i))
+			else:
+				candidate2.append(get_adjacent_tile(cur, i))
+		elif turn1 == 0:
+			if candidate1.size() == 0:
+				candidate1.append(get_adjacent_tile(cur, (i+5)%6))
+				candidate1.append(get_adjacent_tile(cur, i))
+			else:
+				candidate2.append(get_adjacent_tile(cur, (i+5)%6))
+				candidate2.append(get_adjacent_tile(cur, i))
+	if calc_dist(to_tile, candidate1[0]) < calc_dist(to_tile, candidate2[0]):
+		cur = candidate1[0]
+		if candidate1.size() == 2:
+			cur2 = candidate1[1]
+	else:
+		cur = candidate2[0]
+		if candidate1.size() == 2:
+			cur2 = candidate2[1]
+		
+
+
 func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 	var to_tile := map.local_to_map(to_pos)
 	
@@ -23,15 +64,7 @@ func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 	cur1 = map.local_to_map(from_pos)
 	cur2 = Vector2i(-1, -1)
 	
-	var max_dist: float = 0
-	var max_index: int = 0
-	for i in range(6):
-		var d := to_pos.distance_to(get_vertex_pos(cur1, i))
-		if d > max_dist:
-			max_dist = d
-			max_index = i
-	last1 = get_adjacent_tile(cur1, max_index)
-	last2 = get_adjacent_tile(cur1, (max_index + 5) % 6)
+	
 	
 	var tiles := []
 	while true:
@@ -40,7 +73,7 @@ func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 			tiles.append(cur2)
 		if cur1 == to_tile:
 			break
-		nexts = []
+		nexts.clear()
 		next_hexas(cur1, cur2, nexts, last1, last2, from_pos, to_pos)
 		if cur2 != Vector2i(-1, -1):
 			next_hexas(cur2, cur1, nexts, last1, last2, from_pos, to_pos)
