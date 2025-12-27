@@ -26,16 +26,11 @@ func can_unit_change_height(unit: Unit, tile: Vector2i, is_raise: bool) -> bool:
 	return true
 
 func physics(_delta: float) -> void:
-	var t: Team = teams.ally
-	var u: Unit = t.locked_unit
-	if u:
-		if u.height_comp.left_timer <= 0:
+	for t: Team in [teams.ally, teams.enemy]:
+		var u := t.locked_unit
+		if u and u.height_comp.left_timer <= 0:
 			excecute(t)
-	t = teams.enemy
-	u = t.locked_unit
-	if u:
-		if u.height_comp.left_timer <= 0:
-			excecute(t)
+
 	
 
 func excecute(team: Team) -> void:
