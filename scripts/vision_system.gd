@@ -30,6 +30,7 @@ func _process(_delta: float) -> void:
 func set_states() -> void:
 	for u in units:
 		u.vision_comp.visible_state = CustomEnums.VisibleState.NOT
+		u.vision_comp.visible_enemies.clear()
 	for a in units:
 		if a.team == teams.ally:
 			for e in units:
@@ -38,6 +39,9 @@ func set_states() -> void:
 						var vis_state := is_visible(a.position, e.position, a.vision_comp.height, e.vision_comp.height)
 						a.vision_comp.visible_state = maxi(a.vision_comp.visible_state, vis_state)
 						e.vision_comp.visible_state = maxi(e.vision_comp.visible_state, vis_state)
+						if vis_state == CustomEnums.VisibleState.VISIBLE:
+							a.vision_comp.visible_enemies.append(e)
+							e.vision_comp.visible_enemies.append(a)
 
 func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 	tiles.cur1 = map.local_to_map(pos1)
