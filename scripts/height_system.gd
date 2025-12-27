@@ -3,7 +3,7 @@ extends System
 var units: Array[Unit]
 var map: TileMapLayer
 
-var teams: Array
+var teams: Node
 
 func try_start(unit: Unit, pos: Vector2, is_raise: bool) -> void:
 	var team: Team = unit.team
@@ -26,11 +26,17 @@ func can_unit_change_height(unit: Unit, tile: Vector2i, is_raise: bool) -> bool:
 	return true
 
 func physics(_delta: float) -> void:
-	for t: Team in teams:
-		var u: Unit = t.locked_unit
-		if u:
-			if u.height_comp.left_timer <= 0:
-				excecute(t)
+	var t: Team = teams.ally
+	var u: Unit = t.locked_unit
+	if u:
+		if u.height_comp.left_timer <= 0:
+			excecute(t)
+	t = teams.enemy
+	u = t.locked_unit
+	if u:
+		if u.height_comp.left_timer <= 0:
+			excecute(t)
+	
 
 func excecute(team: Team) -> void:
 	map.change_height(team.height_action)
