@@ -5,7 +5,7 @@ var max_height_cd: int
 var left_height_cd := 0.0
 var locked_unit: Unit = null
 var height_action := HeightAction.new()
-
+var score: float
 
 func physics(delta: float) -> void:
 	left_height_cd = maxf(0, left_height_cd - delta)
