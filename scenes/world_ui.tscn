@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc8njthyfcntt"]
+
+[ext_resource type="Script" uid="uid://ce6tii1ouk8ji" path="res://scripts/world_ui.gd" id="1_g1sli"]
+[ext_resource type="Script" uid="uid://bu57ynagsa6lf" path="res://scripts/unit_ui.gd" id="1_pvr84"]
+[ext_resource type="Script" uid="uid://0jpgc1q3c23w" path="res://scripts/ui_canvas.gd" id="3_qemj2"]
+[ext_resource type="Script" uid="uid://c4tamax1hsibh" path="res://scripts/path_ui.gd" id="3_topi3"]
+
+[node name="WorldUI" type="Node"]
+script = ExtResource("1_g1sli")
+
+[node name="UnitUI" type="Node2D" parent="."]
+script = ExtResource("1_pvr84")
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+script = ExtResource("3_qemj2")
+
+[node name="PathUI" type="Node2D" parent="."]
+script = ExtResource("3_topi3")

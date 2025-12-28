@@ -11,6 +11,7 @@ class_name World
 @onready var move_system := $MoveSystem
 
 @onready var ex_con := $ExternalControl
+@onready var world_ui := $WorldUI
 
 
 func _ready() -> void:
@@ -23,7 +24,17 @@ func _ready() -> void:
 	$ExternalControl.map = $TileMapLayer
 	$ExternalControl.teams = $Teams
 	
+	for ui_node in world_ui.get_children(false):
+		ui_node.units = units.units
+		ui_node.teams = teams
+		ui_node.map = map
+	
 	setup_units()
+	
+	connect_all_signals()
+
+func connect_all_signals() -> void:
+	world_ui.path_ui.connect_signal()
 
 func setup_units() -> void:
 	var unit := unit_scene.instantiate()

@@ -14,7 +14,12 @@ var selected: bool
 @onready var vision_comp := $VisionComp
 
 # visible status
-var path_2i: PackedVector2Array
+var path_2i: PackedVector2Array:
+	set(value):
+		path_2i = value
+		path_changed.emit()
+
+signal path_changed
 
 func _ready() -> void:
 	connect_signals()
@@ -32,6 +37,7 @@ func setup(hp: int, damage: int, speed: int, height: float, pos: Vector2) -> voi
 
 func _on_move_completed() -> void:
 	path_2i.remove_at(0)
+	path_changed.emit()
 
 func request_height_change(pos: Vector2, is_raise: bool) -> void:
 	if height_action_comp.is_changing or move_comp.moving_weight != 0:

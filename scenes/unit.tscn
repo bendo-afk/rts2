@@ -27,4 +27,5 @@ script = ExtResource("5_tb304")
 script = ExtResource("6_e8hdl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 script = ExtResource("6_ruro2")

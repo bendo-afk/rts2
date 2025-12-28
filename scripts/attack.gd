@@ -4,6 +4,7 @@ extends Node2D
 var damage: int
 var traverse_speed: float
 # endogenous
+var angle_margin := 0.1
 var max_reload_time: float
 # status
 var left_reload_time: float
