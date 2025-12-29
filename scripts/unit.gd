@@ -36,10 +36,17 @@ func setup(hp: int, damage: int, speed: int, height: float, pos: Vector2) -> voi
 	position = pos
 
 func _on_move_completed() -> void:
-	path_2i.remove_at(0)
-	path_changed.emit()
+	remove_path(0)
 
 func request_height_change(pos: Vector2, is_raise: bool) -> void:
 	if height_action_comp.is_changing or move_comp.moving_weight != 0:
 		return
 	world.height_system.try_start(self, pos, is_raise)
+
+func add_path(x: PackedVector2Array) -> void:
+	path_2i.append_array(x)
+	path_changed.emit()
+
+func remove_path(i: int) -> void:
+	path_2i.remove_at(i)
+	path_changed.emit()

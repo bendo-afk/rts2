@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgn75wyj0yqda"]
+
+[ext_resource type="Script" uid="uid://cffvxjdfenywk" path="res://scripts/in_hp.gd" id="1_14lw5"]
+
+[node name="InHP" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_14lw5")
+
+[node name="HP" type="Label" parent="."]
+layout_mode = 2
+
+[node name="Reload" type="Label" parent="."]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2

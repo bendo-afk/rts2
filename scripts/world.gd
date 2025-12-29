@@ -24,17 +24,19 @@ func _ready() -> void:
 	$ExternalControl.map = $TileMapLayer
 	$ExternalControl.teams = $Teams
 	
+	setup_units()
+	
+	setup_ui()
+
+func setup_ui() -> void:
 	for ui_node in world_ui.get_children(false):
 		ui_node.units = units.units
 		ui_node.teams = teams
 		ui_node.map = map
-	
-	setup_units()
-	
-	connect_all_signals()
 
-func connect_all_signals() -> void:
 	world_ui.path_ui.connect_signal()
+	world_ui.ui_canvas.setup()
+	teams.ally.score_changed.connect(world_ui.ui_canvas.top_container.)
 
 func setup_units() -> void:
 	var unit := unit_scene.instantiate()

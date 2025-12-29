@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dx3ti4nru70j4"]
+
+[ext_resource type="Script" uid="uid://bk1gvm0567b7d" path="res://scripts/side_hp.gd" id="1_1clld"]
+
+[node name="SideHP" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_1clld")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+
+[node name="Parameters" type="Label" parent="."]
+layout_mode = 2
+
+[node name="Reload" type="Label" parent="."]
+layout_mode = 2
+
+[node name="HP" type="Label" parent="."]
+layout_mode = 2
