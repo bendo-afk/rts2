@@ -34,9 +34,8 @@ func setup_ui() -> void:
 		ui_node.teams = teams
 		ui_node.map = map
 
-	world_ui.path_ui.connect_signal()
+	world_ui.path_ui.setup()
 	world_ui.ui_canvas.setup()
-	teams.ally.score_changed.connect(world_ui.ui_canvas.top_container.)
 
 func setup_units() -> void:
 	var unit := unit_scene.instantiate()

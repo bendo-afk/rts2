@@ -8,7 +8,7 @@ var line_color := Color.WHITE
 var line_width := 2
 
 
-func connect_signal() -> void:
+func setup() -> void:
 	for a in units:
 		if a.team == teams.ally:
 			a.path_changed.connect(_on_path_changed)

@@ -5,7 +5,7 @@ extends HBoxContainer
 @onready var reload_label := $Reload
 @onready var hp_label := $HP
 
-func set_paramters(speed: int, damage: int, height: float) -> void:
+func set_parameters(speed: int, damage: int, height: float) -> void:
 	parameters_label.text = str(speed) + "/" + str(damage) + "/" + str(height)
 
 func set_hp(hp: int, max_hp: int) -> void:

@@ -12,6 +12,8 @@ var turret_angle: float
 # control
 var target_pos: Vector2
 
+signal reload_changed(left_arg: float, max_arg: float)
+
 
 func _ready() -> void:
 	left_reload_time = max_reload_time
@@ -20,6 +22,7 @@ func physics(delta: float) -> void:
 	var rel_target_pos := calc_rel_target_pos(get_parent().position, target_pos)
 	rotate_turret(rel_target_pos, delta)
 	left_reload_time = max(0, left_reload_time - delta)
+	reload_changed.emit(left_reload_time, max_reload_time)
 
 func shoot(target: Unit) -> int:
 	target.hp_comp.take_damge()

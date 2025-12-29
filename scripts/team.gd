@@ -8,9 +8,9 @@ var height_action := HeightAction.new()
 var score: float:
 	set(value):
 		score = value
-		score_changed.emit()
+		score_changed.emit(value)
 
-signal score_changed
+signal score_changed(point: float)
 
 func physics(delta: float) -> void:
 	left_height_cd = maxf(0, left_height_cd - delta)
