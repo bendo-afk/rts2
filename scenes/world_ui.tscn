@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bc8njthyfcntt"]
+[gd_scene load_steps=10 format=3 uid="uid://bc8njthyfcntt"]
 
 [ext_resource type="Script" uid="uid://ce6tii1ouk8ji" path="res://scripts/world_ui.gd" id="1_g1sli"]
 [ext_resource type="Script" uid="uid://bu57ynagsa6lf" path="res://scripts/unit_ui.gd" id="1_pvr84"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cv43brgxnn7q6" path="res://scenes/side_container.tscn" id="5_ghh30"]
 [ext_resource type="PackedScene" uid="uid://cgn75wyj0yqda" path="res://scenes/in_hp.tscn" id="5_oyvde"]
 [ext_resource type="Script" uid="uid://duyirpx8cuf3h" path="res://scripts/top_container.gd" id="7_oyvde"]
+[ext_resource type="Script" uid="uid://bgmdw3aq1f3pn" path="res://scripts/in_ui.gd" id="8_ghh30"]
 
 [node name="WorldUI" type="Node"]
 script = ExtResource("1_g1sli")
@@ -36,6 +37,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("8_ghh30")
+in_hp_scene = ExtResource("5_oyvde")
 
 [node name="PathUI" type="Node2D" parent="."]
 script = ExtResource("3_topi3")

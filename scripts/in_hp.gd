@@ -1,8 +1,14 @@
 extends HBoxContainer
 
+var unit: Unit
+
 @onready var  hp_label := $HP
 @onready var reload_label := $Reload
 @onready var name_label := $Name
+
+func follow(offset: Vector2) -> void:
+	var screen_pos :=  unit.get_global_transform_with_canvas().origin
+	position = screen_pos + offset
 
 func set_hp(hp: int, max_hp: int) -> void:
 	hp_label.text = str(hp) + "/" + str(max_hp)

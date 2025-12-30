@@ -8,12 +8,17 @@ var map: TileMapLayer
 @export var side_container_scene: PackedScene
 
 @onready var top_container := $TopContainer
+@onready var in_ui := $InUI
 
 func setup() -> void:
 	top_container.teams = teams
 	top_container.setup()
 
 	setup_sides()
+	
+	in_ui.units = units
+	in_ui.team = teams.ally
+	in_ui.setup()
 
 func setup_sides() -> void:
 	var ally_side := side_container_scene.instantiate()

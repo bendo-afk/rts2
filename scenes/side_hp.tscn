@@ -13,8 +13,8 @@ layout_mode = 2
 [node name="Parameters" type="Label" parent="."]
 layout_mode = 2
 
-[node name="Reload" type="Label" parent="."]
+[node name="HP" type="Label" parent="."]
 layout_mode = 2
 
-[node name="HP" type="Label" parent="."]
+[node name="Reload" type="Label" parent="."]
 layout_mode = 2

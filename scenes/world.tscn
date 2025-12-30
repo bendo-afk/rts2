@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c785ctrncl2wo"]
+[gd_scene load_steps=14 format=3 uid="uid://c785ctrncl2wo"]
 
 [ext_resource type="Script" uid="uid://e023paag1mx7" path="res://scripts/world.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://c5oa4n6yut78r" path="res://scripts/teams.gd" id="2_7r4gi"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://bg1c5beqdi8p4" path="res://scripts/score_system.gd" id="8_e3hyu"]
 [ext_resource type="Script" uid="uid://x2ralmns4auw" path="res://scripts/shoot_system.gd" id="10_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://bc8njthyfcntt" path="res://scenes/world_ui.tscn" id="12_q5onr"]
+[ext_resource type="Script" uid="uid://cmun2p06tmpee" path="res://scripts/camera_2d.gd" id="13_jhx03"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_nnsk1")
@@ -49,3 +50,6 @@ metadata/_custom_type_script = "uid://dtbr1enlukinv"
 script = ExtResource("8_4mrxx")
 
 [node name="WorldUI" parent="." instance=ExtResource("12_q5onr")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("13_jhx03")
