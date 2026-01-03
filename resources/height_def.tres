@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="HeightDef" load_steps=2 format=3 uid="uid://knrpftuwxb5m"]
+
+[ext_resource type="Script" uid="uid://6fkyl3ib8wsb" path="res://scripts/unattatched/height_def.gd" id="1_7yx4o"]
+
+[resource]
+script = ExtResource("1_7yx4o")
+count = 1
+name = "height"
+metadata/_custom_type_script = "uid://6fkyl3ib8wsb"

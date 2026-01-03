@@ -3,7 +3,6 @@ extends Node2D
 class_name Unit
 
 var team: Team
-var world: World
 
 var selected: bool
 #components
@@ -20,6 +19,7 @@ var path_2i: PackedVector2Array:
 		path_changed.emit()
 
 signal path_changed
+signal height_request(unit: Unit, pos: Vector2, is_raise: bool)
 
 func _ready() -> void:
 	connect_signals()
@@ -28,11 +28,11 @@ func connect_signals() -> void:
 	move_comp.move_completed.connect(_on_move_completed)
 
 func setup(hp: int, damage: int, speed: int, height: float, pos: Vector2) -> void:
-	attack_comp.traverse_speed = speed
-	attack_comp.damage = damage
 	hp_comp.max_hp = hp
-	vision_comp.height = height
+	attack_comp.damage = damage
+	attack_comp.traverse_speed = speed
 	move_comp.speed = speed
+	vision_comp.height = height
 	position = pos
 
 func _on_move_completed() -> void:
@@ -41,7 +41,7 @@ func _on_move_completed() -> void:
 func request_height_change(pos: Vector2, is_raise: bool) -> void:
 	if height_action_comp.is_changing or move_comp.moving_weight != 0:
 		return
-	world.height_system.try_start(self, pos, is_raise)
+	height_request.emit(self, pos, is_raise)
 
 func add_path(x: PackedVector2Array) -> void:
 	path_2i.append_array(x)

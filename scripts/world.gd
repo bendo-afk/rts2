@@ -9,12 +9,15 @@ class_name World
 @onready var teams := $Teams
 
 @onready var move_system := $MoveSystem
+@onready var height_system := $HeightSystem
 
 @onready var ex_con := $ExternalControl
 @onready var world_ui := $WorldUI
 
 
 func _ready() -> void:
+	setup_units()
+	
 	var childs := get_children(false)
 	for c in childs:
 		if c is System:
@@ -24,7 +27,6 @@ func _ready() -> void:
 	$ExternalControl.map = $TileMapLayer
 	$ExternalControl.teams = $Teams
 	
-	setup_units()
 	
 	setup_ui()
 
@@ -39,9 +41,9 @@ func setup_ui() -> void:
 
 func setup_units() -> void:
 	var unit := unit_scene.instantiate()
-	unit.team = teams.ally
-	unit.world = self
 	units.add_child(unit)
+	unit.height_request.connect(height_system.try_start)
+	unit.team = teams.ally
 	unit.setup(3, 3, 1, 1, map.map_to_local(Vector2i.ZERO))
 	units.units.append(unit)
 

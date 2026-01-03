@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ConversionRule" load_steps=2 format=3 uid="uid://b3lv510xrgiwq"]
+
+[ext_resource type="Script" uid="uid://dtf2yaqp5rcgs" path="res://scripts/unattatched/conversion_rule.gd" id="1_axdi2"]
+
+[resource]
+script = ExtResource("1_axdi2")
+base = 1.0
+growth = -0.3
+exponent = 1.0
+metadata/_custom_type_script = "uid://dtf2yaqp5rcgs"
