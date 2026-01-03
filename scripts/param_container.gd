@@ -9,10 +9,11 @@ var trade_off: bool
 
 func setup(param_def: ParameterDef) -> void:
 	param_name = param_def.name
-	param_slider.setup(param_def.min_value, param_def.step, param_def.count)
 	trade_off = param_def.trade_off
-	setup_label()
+	
+	param_slider.setup(param_def.min_value, param_def.step, param_def.count)
 	tick_labels.setup_ticks(param_def)
+	setup_label()
 
 func setup_label() -> void:
 	label.text = param_name
