@@ -6,7 +6,9 @@ class_name ParameterDef
 
 @export var min_value: float
 @export var step: float
+@export var count: int
 
+@export var trade_off: bool
 
 func to_level(x: float) -> int:
 	return int((x - min_value) / step) + 1

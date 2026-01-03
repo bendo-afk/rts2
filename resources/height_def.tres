@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="HeightDef" load_steps=2 format=3 uid="uid://knrpftuwxb5m"]
+[gd_resource type="Resource" script_class="ParameterDef" load_steps=2 format=3 uid="uid://uv1581hkvqr2"]
 
-[ext_resource type="Script" uid="uid://6fkyl3ib8wsb" path="res://scripts/unattatched/height_def.gd" id="1_7yx4o"]
+[ext_resource type="Script" uid="uid://qrg0jjlw1s8h" path="res://scripts/unattatched/parameter_def.gd" id="1_k1pej"]
 
 [resource]
-script = ExtResource("1_7yx4o")
-count = 1
+script = ExtResource("1_k1pej")
 name = "height"
-metadata/_custom_type_script = "uid://6fkyl3ib8wsb"
+count = 1
+metadata/_custom_type_script = "uid://qrg0jjlw1s8h"

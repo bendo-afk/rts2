@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ParameterDef" load_steps=2 format=3 uid="uid://cepuckpdq0188"]
 
-[ext_resource type="Script" uid="uid://qrg0jjlw1s8h" path="res://scripts/unattatched/parameter_def.gd" id="1_schw6"]
+[ext_resource type="Script" uid="uid://qrg0jjlw1s8h" path="res://scripts/unattatched/parameter_def.gd" id="1_ufkxi"]
 
 [resource]
-script = ExtResource("1_schw6")
+script = ExtResource("1_ufkxi")
 name = "speed"
 min_value = 1.0
 step = 1.0
-is_trade_off = true
+count = 3
 metadata/_custom_type_script = "uid://qrg0jjlw1s8h"

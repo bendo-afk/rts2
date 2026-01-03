@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce7j036ub3axl"]
+
+[ext_resource type="Script" uid="uid://c3wqcfkhty3lu" path="res://scripts/param_container.gd" id="1_562nu"]
+[ext_resource type="Script" uid="uid://dm1ye8te5scnd" path="res://scripts/param_slider.gd" id="1_pqx3q"]
+[ext_resource type="Script" uid="uid://cfkdcmdvpxao5" path="res://scripts/tick_labels.gd" id="3_gpr1i"]
+
+[node name="ParamContainer" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_562nu")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+
+[node name="ParamSlider" type="HSlider" parent="."]
+layout_mode = 2
+ticks_position = 3
+script = ExtResource("1_pqx3q")
+
+[node name="TickLabels" type="HBoxContainer" parent="."]
+layout_mode = 2
+script = ExtResource("3_gpr1i")

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="ParameterDef" load_steps=2 format=3 uid="uid://o1wub2m5ldpu"]
 
-[ext_resource type="Script" uid="uid://qrg0jjlw1s8h" path="res://scripts/unattatched/parameter_def.gd" id="1_eyf3t"]
+[ext_resource type="Script" uid="uid://qrg0jjlw1s8h" path="res://scripts/unattatched/parameter_def.gd" id="1_hurqg"]
 
 [resource]
-script = ExtResource("1_eyf3t")
+script = ExtResource("1_hurqg")
 name = "hp"
 min_value = 9.0
 step = 4.0
-is_trade_off = true
+count = 3
 metadata/_custom_type_script = "uid://qrg0jjlw1s8h"
