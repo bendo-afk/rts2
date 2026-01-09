@@ -1,7 +1,5 @@
 extends System
 
-const NULL := Vector2i(-9999,-9999)
-
 var units: Array[Unit]
 var map: TileMapLayer
 var teams: Node
@@ -10,16 +8,16 @@ var margin_s: float = 0
 var margin_l: float = 0
 
 class Tiles:
-	var last1 := NULL
-	var last2 := NULL
-	var cur1 := NULL
-	var cur2 := NULL
-	var next1 := NULL
-	var next2 := NULL
+	var last1 := Vector2i.MIN
+	var last2 := Vector2i.MIN
+	var cur1 := Vector2i.MIN
+	var cur2 := Vector2i.MIN
+	var next1 := Vector2i.MIN
+	var next2 := Vector2i.MIN
 
 class Candidates:
-	var t1 := NULL
-	var t2 := NULL
+	var t1 := Vector2i.MIN
+	var t2 := Vector2i.MIN
 
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("test"):
@@ -62,12 +60,12 @@ func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 				tiles.cur1 = tile5
 			return
 		elif turn1 * turn2 == -1:
-			if cands1.t1 == NULL:
+			if cands1.t1 == Vector2i.MIN:
 				cands1.t1 = get_adjacent_tile(tiles.cur1, i)
 			else:
 				cands2.t1 = get_adjacent_tile(tiles.cur1, i)
 		elif turn1 == 0:
-			if cands1.t1 == NULL:
+			if cands1.t1 == Vector2i.MIN:
 				cands1.t1 = get_adjacent_tile(tiles.cur1, (i+5)%6)
 				cands1.t2 = get_adjacent_tile(tiles.cur1, i)
 			else:
@@ -75,11 +73,11 @@ func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 				cands2.t2 = get_adjacent_tile(tiles.cur1, i)
 	if calc_dist(to_tile, cands1.t1) < calc_dist(to_tile, cands2.t1):
 		tiles.cur1 = cands1.t1
-		if cands1.t2 != NULL:
+		if cands1.t2 != Vector2i.MIN:
 			tiles.cur2 = cands1.t2
 	else:
 		tiles.cur1 = cands2.t1
-		if cands2.t2 != NULL:
+		if cands2.t2 != Vector2i.MIN:
 			tiles.cur2 = cands2.t2
 		
 
@@ -94,14 +92,14 @@ func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 	while true:
 		
 		tiles_between.append(tiles.cur1)
-		if tiles.cur2 != NULL:
+		if tiles.cur2 != Vector2i.MIN:
 			tiles_between.append(tiles.cur2)
 		if tiles.cur1 == to_tile or tiles.cur2 == to_tile:
 			break
-		tiles.next1 = NULL
-		tiles.next2 = NULL
+		tiles.next1 = Vector2i.MIN
+		tiles.next2 = Vector2i.MIN
 		next_hexas(tiles.cur1, tiles, from_pos, to_pos)
-		if tiles.cur2 != NULL:
+		if tiles.cur2 != Vector2i.MIN:
 			next_hexas(tiles.cur2, tiles, from_pos, to_pos)
 		tiles.last1 = tiles.cur1
 		tiles.last2 = tiles.cur2
@@ -118,23 +116,23 @@ func next_hexas(cur1: Vector2i, tiles: Tiles, pos1: Vector2, pos2: Vector2) -> v
 		if (turn1 == 0 or turn2 == 0 or turn1 != turn2):
 			tile = get_adjacent_tile(cur1, i)
 			if (tile != tiles.cur1 and tile != tiles.cur2 and tile != tiles.next1 and tile != tiles.next2 and tile != tiles.last1 and tile != tiles.last2):
-				if tiles.next1 == NULL:
+				if tiles.next1 == Vector2i.MIN:
 					tiles.next1 = tile
-				elif tiles.next2 == NULL:
+				elif tiles.next2 == Vector2i.MIN:
 					tiles.next2 = tile
 			if turn1 == 0:
 				tile = get_adjacent_tile(cur1, (i + 5) % 6)
 				if (tile != tiles.cur1 and tile != tiles.cur2 and tile != tiles.next1 and tile != tiles.next2 and tile != tiles.last1 and tile != tiles.last2):
-					if tiles.next1 == NULL:
+					if tiles.next1 == Vector2i.MIN:
 						tiles.next1 = tile
-					elif tiles.next2 == NULL:
+					elif tiles.next2 == Vector2i.MIN:
 						tiles.next2 = tile
 			if turn2 == 0:
 				tile = get_adjacent_tile(cur1, (i + 1) % 6)
 				if (tile != tiles.cur1 and tile != tiles.cur2 and tile != tiles.next1 and tile != tiles.next2 and tile != tiles.last1 and tile != tiles.last2):
-					if tiles.next1 == NULL:
+					if tiles.next1 == Vector2i.MIN:
 						tiles.next1 = tile
-					elif tiles.next2 == NULL:
+					elif tiles.next2 == Vector2i.MIN:
 						tiles.next2 = tile
 
 func turn(pos0: Vector2, pos1: Vector2, pos2: Vector2) -> int:
@@ -220,7 +218,7 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 			min_margin = t_margin
 
 		# next2 は存在するときだけ
-		if tiles.cur2 != NULL:
+		if tiles.cur2 != Vector2i.MIN:
 			n = tiles.cur2
 			t_height = map.get_cell_source_id(n)
 			t_dist = calc_dist(tile1, n)
@@ -231,10 +229,10 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 				min_margin = t_margin
 		
 	
-		tiles.next1 = NULL
-		tiles.next2 = NULL
+		tiles.next1 = Vector2i.MIN
+		tiles.next2 = Vector2i.MIN
 		next_hexas(tiles.cur1, tiles, from_pos, to_pos)
-		if tiles.cur2 != NULL:
+		if tiles.cur2 != Vector2i.MIN:
 			next_hexas(tiles.cur2, tiles, from_pos, to_pos)
 		tiles.last1 = tiles.cur1
 		tiles.last2 = tiles.cur2
