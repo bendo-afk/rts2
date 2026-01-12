@@ -17,11 +17,11 @@ func draw_units() -> void:
 			draw_circle(a.position, size, ally_color, true, -1, true)
 			
 			var angle: float = a.attack_comp.turret_angle
-			draw_line(a.position, 1000*Vector2(cos(angle), sin(angle)), Color.WHEAT, 2, true)
+			draw_line(a.position, a.position + 1000*Vector2(cos(angle), sin(angle)), Color.WHEAT, 2, true)
 			angle += a.attack_comp.angle_margin
-			draw_line(a.position, 1000*Vector2(cos(angle), sin(angle)), Color.WHEAT, 2, true)
+			draw_line(a.position, a.position + 1000*Vector2(cos(angle), sin(angle)), Color.WHEAT, 2, true)
 			angle -= 2 * a.attack_comp.angle_margin
-			draw_line(a.position, 1000*Vector2(cos(angle), sin(angle)), Color.WHEAT, 2, true)
+			draw_line(a.position, a.position + 1000*Vector2(cos(angle), sin(angle)), Color.WHEAT, 2, true)
 
 func _process(_delta: float) -> void:
 	queue_redraw()

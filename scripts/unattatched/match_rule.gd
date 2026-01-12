@@ -17,9 +17,9 @@ var speed_to_traverse := preload("res://resources/speed2traverse.tres")
 var damage_to_reload := preload("res://resources/damage2reload.tres")
 
 # map
-var n_height: int = 5
-var x_map: int = 20
-var y_map: int = 20
+var max_height: int = 5
+var n_x: int = 20
+var n_y: int = 20
 
 # system
 var angle_margin: float = 0.1

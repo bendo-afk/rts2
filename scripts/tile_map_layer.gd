@@ -2,8 +2,13 @@ extends TileMapLayer
 
 var hsize: int = 128
 var vsize: int = 148
-var MAX := 4
-var MIN := 0
+var max_height := 4
+const MIN := 0
+
+var n_x := 20
+var n_y := 20
+var height_arr: Array[int]
+
 @onready var teximage: Resource = preload("res://prepaired_data/images/EDGE2_128.png")
 
 var rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -11,7 +16,7 @@ var fnl: FastNoiseLite = FastNoiseLite.new()
 
 @onready var astar: AStar2D = AStar2D.new()
 
-func _ready() -> void:	
+func _ready() -> void:
 	tile_set = make_tileset()
 	setup_map()
 	setup_astar()
@@ -45,8 +50,8 @@ func setup_map() -> void:
 	fnl.fractal_octaves = 3
 	fnl.fractal_gain = 0.5
 	fnl.set_frequency(0.2)
-	for y in range(20):
-		for x in range(20 - y):
+	for y in range(n_y):
+		for x in range(n_x - y):
 			var n: float = fnl.get_noise_2d(x,y)
 			n = (n + 1) / 2.0
 			n = pow(n, 2)
@@ -95,7 +100,7 @@ func change_height(height_action: HeightAction) -> void:
 
 func can_change_height(tile: Vector2i, is_raise: bool) -> bool:
 	var h: int = get_cell_source_id(tile)
-	return not ((is_raise and h == MAX) or (!is_raise and h == MIN))
+	return not ((is_raise and h == max_height) or (!is_raise and h == MIN))
 
 func is_movable_adjacent(tile1: Vector2i, tile2: Vector2i) -> bool:
 	var path_2i: PackedVector2Array = calc_path(tile1, tile2)
