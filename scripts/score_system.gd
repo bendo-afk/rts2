@@ -33,7 +33,6 @@ func _on_tiled_changed(team: Team, tile: Vector2i) -> void:
 				tiles.remove_at(i)	
 
 func physics(delta: float) -> void:
-	
 	for i in range(tiles.size() - 1, -1, -1):
 		var ef_t := tiles[i]
 		ef_t.left_time -= delta

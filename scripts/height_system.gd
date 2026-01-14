@@ -2,8 +2,15 @@ extends System
 
 var units: Array[Unit]
 var map: TileMapLayer
-
 var teams: Node
+
+
+func physics() -> void:
+	for t: Team in [teams.ally, teams.enemy]:
+		var u := t.locked_unit
+		if u and u.height_comp.left_timer <= 0:
+			excecute(t)
+
 
 func try_start(unit: Unit, pos: Vector2, is_raise: bool) -> void:
 	var team: Team = unit.team
@@ -18,19 +25,13 @@ func try_start(unit: Unit, pos: Vector2, is_raise: bool) -> void:
 	team.height_action.tile = tile
 	team.height_action.is_raise = is_raise
 
+
 func can_unit_change_height(unit: Unit, tile: Vector2i, is_raise: bool) -> bool:
 	if not map.is_movable_adjacent(map.pos_to_tile(unit.position), tile):
 		return false
 	if not map.can_change_height(tile, is_raise):
 		return false
 	return true
-
-func physics(_delta: float) -> void:
-	for t: Team in [teams.ally, teams.enemy]:
-		var u := t.locked_unit
-		if u and u.height_comp.left_timer <= 0:
-			excecute(t)
-
 	
 
 func excecute(team: Team) -> void:

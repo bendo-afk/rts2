@@ -19,6 +19,10 @@ class Candidates:
 	var t1 := Vector2i.MIN
 	var t2 := Vector2i.MIN
 
+
+func physics() -> void:
+	set_states()
+
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("test"):
 		#print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
@@ -206,7 +210,6 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	for i in range(100):
 		if tiles.cur1 == to_tile or tiles.cur2 == to_tile:
 			break
-		print(tiles.cur1, ", ", tiles.cur2)
 		# next1 は必ず評価
 		var n := tiles.cur1
 		var t_height := map.get_cell_source_id(n)

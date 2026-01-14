@@ -25,7 +25,7 @@ func physics(delta: float) -> void:
 	reload_changed.emit(left_reload_time, max_reload_time)
 
 func shoot(target: Unit) -> int:
-	target.hp_comp.take_damge()
+	target.hp_comp.take_damage(damage)
 	left_reload_time = max_reload_time
 	return damage
 

@@ -8,22 +8,6 @@ var unit_to_ui: Dictionary[Unit, HBoxContainer] = {}
 @export var in_hp_scene: PackedScene
 @export var stack_offset := Vector2(0, 0)
 
-func setup() -> void:
-	for u in units:
-		var in_hp := in_hp_scene.instantiate()
-		add_child(in_hp)
-		
-		in_hp.unit = u
-		in_hp.set_unit_name("1")
-		in_hp.set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
-		
-		u.hp_comp.hp_changed.connect(in_hp.set_hp)
-		u.attack_comp.reload_changed.connect(in_hp.set_reload)
-		
-		if u.team != team:
-			in_hp.visible = false
-		unit_to_ui[u] = in_hp
-
 func _process(_delta: float) -> void:
 	var groups: Dictionary[Vector2, Array]= {}
 
@@ -41,3 +25,20 @@ func _process(_delta: float) -> void:
 			var u: Unit = list[i]
 			var ui := unit_to_ui[u]
 			ui.follow(stack_offset * i)
+
+func setup() -> void:
+	for u in units:
+		if u.team == team:
+			var in_hp := in_hp_scene.instantiate()
+			add_child(in_hp)
+			
+			in_hp.unit = u
+			in_hp.set_unit_name("1")
+			in_hp.set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
+			
+			u.hp_comp.hp_changed.connect(in_hp.set_hp)
+			u.attack_comp.reload_changed.connect(in_hp.set_reload)
+			
+			if u.team != team:
+				in_hp.visible = false
+			unit_to_ui[u] = in_hp

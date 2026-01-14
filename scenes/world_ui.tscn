@@ -18,8 +18,13 @@ script = ExtResource("1_pvr84")
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 script = ExtResource("3_qemj2")
-in_hp_scene = ExtResource("5_oyvde")
 side_container_scene = ExtResource("5_ghh30")
+
+[node name="SideContainer" type="Control" parent="UICanvas"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
 
 [node name="TopContainer" type="HBoxContainer" parent="UICanvas"]
 anchors_preset = 5

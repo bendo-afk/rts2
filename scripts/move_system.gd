@@ -2,11 +2,14 @@ extends System
 
 var units: Array[Unit]
 var map: TileMapLayer
+var teams: Node
+
 
 func physics(delta: float) -> void:
 	for u in units:
 		move_a_unit(u, delta)
 		u.attack_comp.physics(delta)
+
 
 func move_a_unit(unit: Unit, delta: float) -> void:
 	var path_2i := unit.path_2i

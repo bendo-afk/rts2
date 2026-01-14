@@ -4,7 +4,5 @@
 [ext_resource type="PackedScene" uid="uid://dx3ti4nru70j4" path="res://scenes/side_hp.tscn" id="2_7qcd2"]
 
 [node name="SideContainer" type="VBoxContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
 script = ExtResource("1_rurh7")
 side_hp_scene = ExtResource("2_7qcd2")

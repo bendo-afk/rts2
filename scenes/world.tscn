@@ -1,8 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://c785ctrncl2wo"]
+[gd_scene load_steps=13 format=3 uid="uid://c785ctrncl2wo"]
 
 [ext_resource type="Script" uid="uid://e023paag1mx7" path="res://scripts/world.gd" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://c5oa4n6yut78r" path="res://scripts/teams.gd" id="2_7r4gi"]
-[ext_resource type="Script" uid="uid://nidwgcdkmugm" path="res://scripts/units.gd" id="2_71j4m"]
 [ext_resource type="Script" uid="uid://dyvws57amc2rv" path="res://scripts/vision_system.gd" id="2_k0juu"]
 [ext_resource type="PackedScene" uid="uid://bu4nowuyxtbb7" path="res://scenes/tile_map_layer.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://b4yk8f1r8bh6v" path="res://scenes/unit.tscn" id="2_w7kh3"]
@@ -20,9 +19,6 @@ unit_scene = ExtResource("2_w7kh3")
 
 [node name="Teams" type="Node" parent="."]
 script = ExtResource("2_7r4gi")
-
-[node name="Units" type="Node" parent="."]
-script = ExtResource("2_71j4m")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("2_rwgxs")]
 
