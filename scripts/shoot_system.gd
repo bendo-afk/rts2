@@ -11,6 +11,9 @@ func physics() -> void:
 			var min_angle_diff: float = u.attack_comp.angle_margin
 			var target_enemy: Unit = null
 			for v: Unit in u.vision_comp.visible_enemies:
+				if v.hp_comp.hp <= 0:
+					continue
+
 				var angle_diff: float = abs(angle_difference((v.position - u.position).angle(), u.attack_comp.turret_angle))
 				if angle_diff < min_angle_diff:
 					min_angle_diff = angle_diff
