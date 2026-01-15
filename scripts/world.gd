@@ -57,13 +57,13 @@ func setup_units(params_arr: Array[Dictionary], team: Team) -> void:
 	for d in params_arr:
 		setup_a_unit(d, team)
 
-func setup_a_unit(_param_dict: Dictionary, team: Team) -> void:
+func setup_a_unit(param_dict: Dictionary, team: Team) -> void:
 	var unit := unit_scene.instantiate()
 	add_child(unit)
 	unit.height_request.connect(height_system.try_start)
 	unit.team = team
 	var tile := Vector2i(3,0) if team == teams.ally else Vector2i(4,4)
-	unit.setup(3, 3, 1, 0, map.map_to_local(tile))
+	unit.setup(param_dict["hp"], param_dict["damage"], param_dict["speed"], param_dict["height"], map.map_to_local(tile))
 	unit.tree_exiting.connect(remove_unit.bind(unit))
 	units.append(unit)
 	

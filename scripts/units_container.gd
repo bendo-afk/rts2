@@ -14,4 +14,17 @@ func get_units_params() -> Array[Dictionary]:
 	var arr: Array[Dictionary] = []
 	for c in get_children():
 		arr.append(c.get_parameters())
+	arr.sort_custom(sort_params)
 	return arr
+
+
+func sort_params(a: Dictionary, b: Dictionary) -> bool:
+	if a["hp"] > b["hp"]:
+		return true
+	elif a["hp"] < b["hp"]:
+		return false
+	elif a["damage"] > b["damage"]:
+		return true
+	else:
+		return false
+	

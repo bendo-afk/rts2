@@ -10,7 +10,7 @@ signal hp_changed(hp_arg: int, max_hp_arg: int)
 #signal died(unit: Unit)
 
 func take_damage(damage: int) -> void:
-	hp -= damage
+	hp = maxi(0, hp - damage)
 	hp_changed.emit(hp, max_hp)
 	if hp <= 0:
 		get_parent().queue_free()

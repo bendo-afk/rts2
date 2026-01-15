@@ -33,6 +33,7 @@ func set_states() -> void:
 	for u in units:
 		u.vision_comp.visible_state = CustomEnums.VisibleState.NOT
 		u.vision_comp.visible_enemies.clear()
+
 	for a in units:
 		if a.team == teams.ally:
 			for e in units:
