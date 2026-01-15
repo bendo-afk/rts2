@@ -42,3 +42,9 @@ func setup() -> void:
 			if u.team != team:
 				in_hp.visible = false
 			unit_to_ui[u] = in_hp
+			u.tree_exiting.connect(remove_unit.bind(u))
+
+
+func remove_unit(u: Unit) -> void:
+	unit_to_ui[u].queue_free()
+	unit_to_ui.erase(u)

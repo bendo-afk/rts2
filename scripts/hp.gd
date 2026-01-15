@@ -13,4 +13,5 @@ func take_damage(damage: int) -> void:
 	hp -= damage
 	hp_changed.emit(hp, max_hp)
 	if hp <= 0:
-		died.emit(get_parent())
+		get_parent().queue_free()
+		#died.emit(get_parent())

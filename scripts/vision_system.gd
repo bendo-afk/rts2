@@ -193,8 +193,8 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 		return CustomEnums.VisibleState.VISIBLE
 	
 	
-	var tile1 := map.local_to_map(from_pos)
-	var tile2 := map.local_to_map(to_pos)
+	var tile1 := from_tile
+	var tile2 := to_tile
 	var height1 := unit_height1 + map.get_cell_source_id(tile1)
 	var height2 := unit_height2 + map.get_cell_source_id(tile2)
 	var slope := (height2 - height1) / calc_dist(tile1, tile2)
@@ -207,7 +207,7 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	
 	
 	
-	for i in range(100):
+	for i in range(1000):
 		if tiles.cur1 == to_tile or tiles.cur2 == to_tile:
 			break
 		# next1 は必ず評価

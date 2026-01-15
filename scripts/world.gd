@@ -40,6 +40,12 @@ func _physics_process(delta: float) -> void:
 	score_system.physics(delta)
 	vision_system.physics()
 	shoot_system.physics()
+	#for u in units:
+		#if u.hp_comp.hp <= 0:
+			#units.erase(u)
+			#world_ui.ui_canvas.in_ui.remove_unit(u)
+			#
+			#u.queue_free()
 
 
 func setup_ui() -> void:
@@ -58,8 +64,8 @@ func setup_units() -> void:
 		add_child(unit)
 		unit.height_request.connect(height_system.try_start)
 		unit.team = teams.ally
-		unit.setup(3, 3, 1, 1, map.map_to_local(Vector2i(0,3)))
-		unit.hp_comp.died.connect(remove_unit)
+		unit.setup(3, 3, 1, 0, map.map_to_local(Vector2i(0,3)))
+		unit.tree_exiting.connect(remove_unit.bind(unit))
 		units.append(unit)
 	
 	if true:
@@ -67,11 +73,11 @@ func setup_units() -> void:
 		add_child(unit)
 		unit.height_request.connect(height_system.try_start)
 		unit.team = teams.enemy
-		unit.setup(3, 3, 1, 1, map.map_to_local(Vector2i(3,0)))
-		unit.hp_comp.died.connect(remove_unit)
+		unit.setup(3, 3, 1, 0, map.map_to_local(Vector2i(3,0)))
+		unit.tree_exiting.connect(remove_unit.bind(unit))
 		units.append(unit)
 
 
 func remove_unit(u: Unit) -> void:
-	u.queue_free()
 	units.erase(u)
+	#world_ui.ui_canvas.in_ui.remove_unit(u)
