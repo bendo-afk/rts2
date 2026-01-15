@@ -1,12 +1,14 @@
 extends TileMapLayer
 
+const MIN := 0
 var hsize: int = 128
 var vsize: int = 148
 var max_height := 4
-const MIN := 0
 
 var n_x := 20
 var n_y := 20
+var map_mode := CustomEnums.MapSymmetry.POINT
+
 var height_arr: Array[int]
 
 @onready var teximage: Resource = preload("res://prepaired_data/images/EDGE2_128.png")
@@ -50,15 +52,32 @@ func setup_map() -> void:
 	fnl.fractal_octaves = 3
 	fnl.fractal_gain = 0.5
 	fnl.set_frequency(0.2)
-	for y in range(n_y):
-		for x in range(n_x - y):
-			var n: float = fnl.get_noise_2d(x,y)
-			n = (n + 1) / 2.0
-			n = pow(n, 2)
-			n *= 5
-			var height := int(n) 
-			set_cell(Vector2i(x,y) , height , Vector2i(0,0) , 0)
-			set_cell(Vector2i(19-x, 19 - y), height, Vector2i(0,0), 0)
+	if map_mode == CustomEnums.MapSymmetry.POINT:
+		for y in range(n_y):
+			for x in range(n_x - y):
+				var height := get_rand_height(x, y)
+				set_tile(x, y, height)
+				set_tile(n_x - 1 - x, n_y - 1 - y, height)
+	elif map_mode == CustomEnums.MapSymmetry.LINE:
+		for y in range(n_y):
+			for x in range(ceil(n_x / 2.0)):
+				var height := get_rand_height(x, y)
+				set_tile(x, y, height)
+				set_tile(n_x - 1 - x, y, height)
+
+
+func set_tile(x: int, y: int, height: int) -> void:
+	set_cell(Vector2i(x,y) , height , Vector2i(0,0) , 0)
+
+
+func get_rand_height(x: int, y: int) -> int:
+	var n: float = fnl.get_noise_2d(x,y)
+	n = (n + 1) / 2.0
+	n = pow(n, 2)
+	n *= 5
+	return int(n)
+	
+
 
 func setup_astar() ->void:
 	#各グリッドをastarに追加
