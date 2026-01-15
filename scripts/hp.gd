@@ -7,7 +7,7 @@ var hp: int
 
 #signal die
 signal hp_changed(hp_arg: int, max_hp_arg: int)
-signal died(unit: Unit)
+#signal died(unit: Unit)
 
 func take_damage(damage: int) -> void:
 	hp -= damage

@@ -40,12 +40,6 @@ func _physics_process(delta: float) -> void:
 	score_system.physics(delta)
 	vision_system.physics()
 	shoot_system.physics()
-	#for u in units:
-		#if u.hp_comp.hp <= 0:
-			#units.erase(u)
-			#world_ui.ui_canvas.in_ui.remove_unit(u)
-			#
-			#u.queue_free()
 
 
 func setup_ui() -> void:
@@ -80,4 +74,3 @@ func setup_units() -> void:
 
 func remove_unit(u: Unit) -> void:
 	units.erase(u)
-	#world_ui.ui_canvas.in_ui.remove_unit(u)
