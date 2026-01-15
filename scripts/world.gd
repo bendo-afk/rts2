@@ -20,7 +20,7 @@ var units: Array[Unit]
 
 func setup(ally_params: Array[Dictionary], enemy_params: Array[Dictionary]) -> void:
 	setup_units(ally_params, teams.ally)
-	setup_units(ally_params, teams.enemy)
+	setup_units(enemy_params, teams.enemy)
 	
 	var childs := get_children(false)
 	for c in childs:
@@ -62,7 +62,7 @@ func setup_a_unit(param_dict: Dictionary, team: Team) -> void:
 	add_child(unit)
 	unit.height_request.connect(height_system.try_start)
 	unit.team = team
-	var tile := Vector2i(3,0) if team == teams.ally else Vector2i(4,4)
+	var tile := Vector2i(0,0) if team == teams.ally else Vector2i(map.n_x - 1, map.n_y - 1)
 	unit.setup(param_dict["hp"], param_dict["damage"], param_dict["speed"], param_dict["height"], map.map_to_local(tile))
 	unit.tree_exiting.connect(remove_unit.bind(unit))
 	units.append(unit)
