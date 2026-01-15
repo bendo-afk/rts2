@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpxxheyeljp7t"]
+
+[ext_resource type="Script" uid="uid://fl54rm15geic" path="res://scripts/params_container.gd" id="1_ma878"]
+[ext_resource type="PackedScene" uid="uid://ce7j036ub3axl" path="res://scenes/param_container.tscn" id="2_dig3l"]
+
+[node name="ParamsContainer" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ma878")
+param_container_scene = ExtResource("2_dig3l")

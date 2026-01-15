@@ -18,8 +18,9 @@ var units: Array[Unit]
 @onready var world_ui := $WorldUI
 
 
-func _ready() -> void:
-	setup_units()
+func setup(ally_params: Array[Dictionary], enemy_params: Array[Dictionary]) -> void:
+	setup_units(ally_params, teams.ally)
+	setup_units(ally_params, teams.enemy)
 	
 	var childs := get_children(false)
 	for c in childs:
@@ -52,25 +53,20 @@ func setup_ui() -> void:
 	world_ui.ui_canvas.setup()
 
 
-func setup_units() -> void:
-	if true:
-		var unit := unit_scene.instantiate()
-		add_child(unit)
-		unit.height_request.connect(height_system.try_start)
-		unit.team = teams.ally
-		unit.setup(3, 3, 1, 0, map.map_to_local(Vector2i(0,3)))
-		unit.tree_exiting.connect(remove_unit.bind(unit))
-		units.append(unit)
-	
-	if true:
-		var unit := unit_scene.instantiate()
-		add_child(unit)
-		unit.height_request.connect(height_system.try_start)
-		unit.team = teams.enemy
-		unit.setup(3, 3, 1, 0, map.map_to_local(Vector2i(3,0)))
-		unit.tree_exiting.connect(remove_unit.bind(unit))
-		units.append(unit)
+func setup_units(params_arr: Array[Dictionary], team: Team) -> void:
+	for d in params_arr:
+		setup_a_unit(d, team)
 
+func setup_a_unit(_param_dict: Dictionary, team: Team) -> void:
+	var unit := unit_scene.instantiate()
+	add_child(unit)
+	unit.height_request.connect(height_system.try_start)
+	unit.team = team
+	var tile := Vector2i(3,0) if team == teams.ally else Vector2i(4,4)
+	unit.setup(3, 3, 1, 0, map.map_to_local(tile))
+	unit.tree_exiting.connect(remove_unit.bind(unit))
+	units.append(unit)
+	
 
 func remove_unit(u: Unit) -> void:
 	units.erase(u)
