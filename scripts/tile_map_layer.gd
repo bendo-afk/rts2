@@ -5,9 +5,9 @@ var hsize: int = 128
 var vsize: int = 148
 var max_height := 4
 
-var n_x := 20
-var n_y := 20
-var map_mode := CustomEnums.MapSymmetry.POINT
+var n_x := 19
+var n_y := 19
+var map_mode := CustomEnums.MapSymmetry.LINE
 
 var height_arr: Array[int]
 
@@ -59,11 +59,11 @@ func setup_map() -> void:
 				set_tile(x, y, height)
 				set_tile(n_x - 1 - x, n_y - 1 - y, height)
 	elif map_mode == CustomEnums.MapSymmetry.LINE:
-		for y in range(n_y):
-			for x in range(ceil(n_x / 2.0)):
+		for y in range(ceil(n_y / 2.0)):
+			for x in range(n_x):
 				var height := get_rand_height(x, y)
 				set_tile(x, y, height)
-				set_tile(n_x - 1 - x, y, height)
+				set_tile(x, n_y - 1 - y, height)
 
 
 func set_tile(x: int, y: int, height: int) -> void:
