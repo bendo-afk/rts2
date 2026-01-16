@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="UISettings" load_steps=2 format=3 uid="uid://cbwv2bta2d68f"]
+
+[ext_resource type="Script" uid="uid://cxy4ndifmq8dn" path="res://scripts/unattatched/ui_settings.gd" id="1_41kmr"]
+
+[resource]
+script = ExtResource("1_41kmr")
+metadata/_custom_type_script = "uid://cxy4ndifmq8dn"

@@ -1,10 +1,12 @@
 extends HBoxContainer
 
+var score_size: float = 40
+var cd_size: float = 30
 
 @onready var score_label := $Score
 @onready var cd_label := $Cooldown
 
-func set_sizes(score_size: int, cd_size: int) -> void:
+func set_sizes() -> void:
 	cd_label.add_theme_font_size_override("font_size", cd_size)
 	score_label.add_theme_font_size_override("font_size", score_size)
 

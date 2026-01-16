@@ -5,6 +5,7 @@
 [node name="ScoreContainer" type="HBoxContainer"]
 offset_right = 6.0
 offset_bottom = 23.0
+alignment = 1
 script = ExtResource("1_dm0ml")
 
 [node name="Cooldown" type="Label" parent="."]
@@ -12,3 +13,4 @@ layout_mode = 2
 
 [node name="Score" type="Label" parent="."]
 layout_mode = 2
+text = "0"

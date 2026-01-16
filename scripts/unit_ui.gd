@@ -8,6 +8,7 @@ var size := 10
 var ally_color := Color.BLUE
 var enemy_color := Color.RED
 var turret_color := Color.WHEAT
+var turret_width: float = 2
 
 
 func _process(_delta: float) -> void:
@@ -41,6 +42,6 @@ func draw_turret(u: Unit) -> void:
 	var margin: float = u.attack_comp.angle_margin
 	var pos := u.position
 
-	draw_line(pos, pos + 1000 * Vector2(cos(angle), sin(angle)), turret_color, 2, true)
-	draw_line(pos, pos + 1000 * Vector2(cos(angle + margin), sin(angle + margin)), turret_color, 2, true)
-	draw_line(pos, pos + 1000 * Vector2(cos(angle - margin), sin(angle - margin)), turret_color, 2, true)
+	draw_line(pos, pos + 1000 * Vector2(cos(angle), sin(angle)), turret_color, turret_width, true)
+	draw_line(pos, pos + 1000 * Vector2(cos(angle + margin), sin(angle + margin)), turret_color, turret_width, true)
+	draw_line(pos, pos + 1000 * Vector2(cos(angle - margin), sin(angle - margin)), turret_color, turret_width, true)

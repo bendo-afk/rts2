@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bc8njthyfcntt"]
+[gd_scene load_steps=11 format=3 uid="uid://bc8njthyfcntt"]
 
 [ext_resource type="Script" uid="uid://ce6tii1ouk8ji" path="res://scripts/world_ui.gd" id="1_g1sli"]
 [ext_resource type="Script" uid="uid://bu57ynagsa6lf" path="res://scripts/unit_ui.gd" id="1_pvr84"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c4tamax1hsibh" path="res://scripts/path_ui.gd" id="3_topi3"]
 [ext_resource type="PackedScene" uid="uid://bik4bgk8afcsi" path="res://scenes/score_container.tscn" id="4_5nafa"]
 [ext_resource type="PackedScene" uid="uid://cv43brgxnn7q6" path="res://scenes/side_container.tscn" id="5_ghh30"]
+[ext_resource type="Script" uid="uid://c268dy473mfg3" path="res://scripts/sides_container.gd" id="5_ofelw"]
 [ext_resource type="PackedScene" uid="uid://cgn75wyj0yqda" path="res://scenes/in_hp.tscn" id="5_oyvde"]
 [ext_resource type="Script" uid="uid://duyirpx8cuf3h" path="res://scripts/top_container.gd" id="7_oyvde"]
 [ext_resource type="Script" uid="uid://bgmdw3aq1f3pn" path="res://scripts/in_ui.gd" id="8_ghh30"]
@@ -18,13 +19,6 @@ script = ExtResource("1_pvr84")
 
 [node name="UICanvas" type="CanvasLayer" parent="."]
 script = ExtResource("3_qemj2")
-side_container_scene = ExtResource("5_ghh30")
-
-[node name="SideContainer" type="Control" parent="UICanvas"]
-layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
 
 [node name="TopContainer" type="HBoxContainer" parent="UICanvas"]
 anchors_preset = 5
@@ -36,6 +30,14 @@ offset_bottom = 40.0
 grow_horizontal = 2
 script = ExtResource("7_oyvde")
 score_container = ExtResource("4_5nafa")
+
+[node name="SidesContainer" type="Control" parent="UICanvas"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("5_ofelw")
+side_container_scene = ExtResource("5_ghh30")
 
 [node name="InUI" type="Control" parent="UICanvas"]
 layout_mode = 3

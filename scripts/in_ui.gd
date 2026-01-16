@@ -1,12 +1,14 @@
 extends Control
 
+var font_size: float
+
 var units: Array[Unit]
 var team: Team
 
 var unit_to_ui: Dictionary[Unit, HBoxContainer] = {}
 
 @export var in_hp_scene: PackedScene
-@export var stack_offset := Vector2(0, 0)
+@export var stack_offset := Vector2(0, -15)
 
 func _process(_delta: float) -> void:
 	var groups: Dictionary[Vector2, Array]= {}

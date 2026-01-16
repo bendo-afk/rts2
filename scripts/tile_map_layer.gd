@@ -42,7 +42,7 @@ func make_tile(ts: TileSet , height: int) -> void:
 	tsas.texture = teximage
 	tsas.create_tile(Vector2i(0,0), Vector2i(1,1))
 	var tile_data: TileData = tsas.get_tile_data(Vector2i(0,0) , 0)
-	tile_data.modulate = Color(0,0.99 * height , 0,1)
+	tile_data.modulate = Color(0, (3.0 * height / max_height) , 0,1)
 	
 	ts.add_source(tsas)
 

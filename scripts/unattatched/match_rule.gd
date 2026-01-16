@@ -36,6 +36,7 @@ var score_kaisuu: int = 3
 var score_base: float = 10
 var dist_to_penalty := preload("res://resources/dist2penalty.tres")
 
+var match_time: int = 60*3
 
 func setup() -> void:
 	var arr := [hp_def, damage_def, speed_def]

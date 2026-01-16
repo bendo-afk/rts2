@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="rts2"
-run/main_scene="uid://csun7mfp03fq5"
+run/main_scene="uid://dholhbuvjogp6"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 run/max_fps=60
 config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalSettings="*res://scripts/unattatched/settings.gd"
 
 [debug]
 
