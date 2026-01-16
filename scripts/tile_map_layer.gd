@@ -1,10 +1,11 @@
 extends TileMapLayer
 
 const MIN := 0
+
 var hsize: int = 128
 var vsize: int = 148
-var max_height := 4
 
+var max_height := 4
 var n_x := 19
 var n_y := 19
 var map_mode := CustomEnums.MapSymmetry.LINE
@@ -18,7 +19,7 @@ var fnl: FastNoiseLite = FastNoiseLite.new()
 
 @onready var astar: AStar2D = AStar2D.new()
 
-func _ready() -> void:
+func setup() -> void:
 	tile_set = make_tileset()
 	setup_map()
 	setup_astar()

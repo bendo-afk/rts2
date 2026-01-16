@@ -7,8 +7,10 @@ var match_rule: MatchRule
 @onready var units_container := $UnitsContainer
 @onready var ok_button := $OKButton
 
+
 func _ready() -> void:
 	match_rule = MatchRule.new()
+	match_rule.setup()
 	setup()
 	
 	ok_button.pressed.connect(go_battle)
@@ -30,6 +32,8 @@ func go_battle() -> void:
 	get_tree().root.add_child(battle)
 	get_tree().current_scene = battle
 	node_a.call_deferred("free")
+	
+	battle.world.match_rule = match_rule
 
 	var ally_params: Array = units_container.get_units_params()
 	battle.setup(ally_params, ally_params)

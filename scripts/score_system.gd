@@ -4,9 +4,10 @@ var units: Array[Unit]
 var map: TileMapLayer
 var teams: Node
 
-var max_left_time := 10.0
-var max_count := 3
+var score_interval := 10.0
+var score_kaisuu := 3
 var base_point := 10.0
+var dist2pena: ConversionRule
 
 var tiles: Array[EffectiveTile]
 
@@ -21,8 +22,8 @@ func _on_tiled_changed(team: Team, tile: Vector2i) -> void:
 	var eff_tile := EffectiveTile.new()
 	eff_tile.team = team
 	eff_tile.tile = tile
-	eff_tile.left_time = max_left_time
-	eff_tile.count = max_count
+	eff_tile.left_time = score_interval
+	eff_tile.count = score_kaisuu
 	eff_tile.frame_created = Engine.get_physics_frames()
 	tiles.append(eff_tile)
 	
@@ -47,7 +48,7 @@ func get_score(index: int) -> void:
 	if ef_t.count == 0:
 		tiles.remove_at(index)
 	else:
-		ef_t.left_time = max_left_time
+		ef_t.left_time = score_interval
 
 func calc_score(ef_t: EffectiveTile) -> float:
 	var penalty := 0.0
@@ -57,7 +58,7 @@ func calc_score(ef_t: EffectiveTile) -> float:
 		if t.team == ef_t.team:
 			var dist := calc_dist(ef_t.tile, t.tile)
 			if dist != 0:
-				penalty += 2.0 / dist
+				penalty += dist2pena.convert(dist)
 			else:
 				return 0
 	return max(base_point - penalty, 0)

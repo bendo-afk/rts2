@@ -28,15 +28,17 @@ func connect_signals() -> void:
 	move_comp.move_completed.connect(_on_move_completed)
 
 
-func setup(hp: int, damage: int, speed: int, height: float, pos: Vector2) -> void:
+func setup(hp: int, damage: int, speed: int, height: float, pos: Vector2, dam2rel: ConversionRule, spe2tra: ConversionRule, angle_margin: float) -> void:
 	hp_comp.max_hp = hp
 	hp_comp.hp = hp
 	attack_comp.damage = damage
-	attack_comp.max_reload_time = damage
-	attack_comp.traverse_speed = speed
+	attack_comp.max_reload_time = dam2rel.convert(damage)
+	attack_comp.traverse_speed = spe2tra.convert(speed)
+	attack_comp.angle_margin = angle_margin
 	move_comp.speed = speed
 	vision_comp.height = height
 	position = pos
+
 
 func _on_move_completed() -> void:
 	remove_path(0)

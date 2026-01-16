@@ -20,12 +20,3 @@ func move_to_next(from_pos: Vector2, to_pos: Vector2, speed_multiplier: float, d
 func complete_move() -> void:
 	moving_weight = 0
 	move_completed.emit()
-
-func height_diff_to_speed(height_diff: int) -> float:
-	if height_diff == 0:
-		return 1
-	elif height_diff == 1:
-		return 2.0/3
-	elif height_diff <= -1:
-		return 3.0/2
-	return 10

@@ -8,4 +8,5 @@ name = "speed"
 min_value = 1.0
 step = 1.0
 count = 3
+trade_off = true
 metadata/_custom_type_script = "uid://qrg0jjlw1s8h"
