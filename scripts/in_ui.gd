@@ -1,6 +1,7 @@
 extends Control
 
 var font_size: float
+var names: Array
 
 var units: Array[Unit]
 var team: Team
@@ -27,6 +28,7 @@ func _process(_delta: float) -> void:
 	# 2. グループ内でUIをずらす
 	for key in groups:
 		var list := groups[key]
+		list.reverse()
 		for i in list.size():
 			var u: Unit = list[i]
 			var ui := unit_to_ui[u]
@@ -35,13 +37,13 @@ func _process(_delta: float) -> void:
 
 func setup() -> void:
 	stack_offset.y -= font_size
+	var indices: Array = [0, 0]
 	for u in units:
 		var in_hp := in_hp_scene.instantiate()
 		add_child(in_hp)
 		
 		in_hp.set_font_size(font_size)
 		in_hp.unit = u
-		in_hp.set_unit_name("1")
 		in_hp.set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
 		
 		u.hp_comp.hp_changed.connect(in_hp.set_hp)
@@ -49,6 +51,10 @@ func setup() -> void:
 		
 		unit_to_ui[u] = in_hp
 		u.tree_exiting.connect(remove_unit.bind(u))
+		
+		var team_index := 0 if u.team == team else 1
+		in_hp.set_unit_name(names[indices[team_index]])
+		indices[team_index] += 1
 
 
 func remove_unit(u: Unit) -> void:

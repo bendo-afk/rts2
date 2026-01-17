@@ -23,7 +23,9 @@ func reflect_ui_settings() -> void:
 	ui_canvas.top_container.cd_size = ui_settings.cd_size
 	ui_canvas.sides_container.side_margin = ui_settings.side_margin
 	ui_canvas.sides_container.side_size = ui_settings.side_size
+	ui_canvas.sides_container.names = ui_settings.names
 	ui_canvas.in_ui.font_size = ui_settings.in_size
+	ui_canvas.in_ui.names = ui_settings.names
 	
 	path_ui.line_color = ui_settings.path_color
 	path_ui.line_width = ui_settings.path_width

@@ -18,3 +18,13 @@ var turret_width: float = 2
 
 var path_color: Color = Color.WHITE
 var path_width: float = 2
+
+var names: Array = [
+	"A",
+	"B",
+	"C",
+	"D",
+	"E",
+	"F",
+	"G",
+]

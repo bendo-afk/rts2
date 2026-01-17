@@ -2,6 +2,7 @@ extends Control
 
 var side_margin: float
 var side_size: float
+var names: Array
 
 var units: Array[Unit]
 var teams: Node
@@ -19,6 +20,7 @@ func create_side(team: Team, reverse: bool) -> void:
 	var side_container := side_container_scene.instantiate()
 	add_child(side_container)
 	side_container.side_size = side_size
+	side_container.names = names
 	side_container.units = units
 	side_container.team = team
 	side_container.setup()
