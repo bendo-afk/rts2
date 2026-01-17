@@ -11,16 +11,20 @@ var teams: Node
 func setup() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	
-	var ally_side := side_container_scene.instantiate()
-	add_child(ally_side)
-	ally_side.units = units
-	ally_side.team = teams.ally
-	ally_side.setup()
+	create_side(teams.ally, false)
+	create_side(teams.enemy, true)
+
+
+func create_side(team: Team, reverse: bool) -> void:
+	var side_container := side_container_scene.instantiate()
+	add_child(side_container)
+	side_container.side_size = side_size
+	side_container.units = units
+	side_container.team = team
+	side_container.setup()
 	
-	var enemy_side := side_container_scene.instantiate()
-	add_child(enemy_side)
-	enemy_side.set_anchors_and_offsets_preset(1, true)
-	enemy_side.set_h_grow_direction(0)
-	enemy_side.units = units
-	enemy_side.team = teams.enemy
-	enemy_side.setup()
+	if reverse:
+		side_container.set_anchors_and_offsets_preset(1, false)
+		side_container.set_h_grow_direction(0)
+
+	side_container.set_offset(Side.SIDE_TOP, side_margin)

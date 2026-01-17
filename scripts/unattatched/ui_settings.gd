@@ -10,11 +10,11 @@ var side_size: float = 20
 var in_size: float = 20
 
 var unit_size: float = 10
-var ally_color: Color
-var enemy_color: Color
+var ally_color := Color.BLUE
+var enemy_color := Color.RED
 
-var turret_color: Color
-var turret_width: float
+var turret_color := Color.WHEAT
+var turret_width: float = 2
 
-var path_color: Color
-var path_width: float
+var path_color: Color = Color.WHITE
+var path_width: float = 2

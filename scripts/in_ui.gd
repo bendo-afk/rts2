@@ -8,7 +8,7 @@ var team: Team
 var unit_to_ui: Dictionary[Unit, HBoxContainer] = {}
 
 @export var in_hp_scene: PackedScene
-@export var stack_offset := Vector2(0, -15)
+@export var stack_offset := Vector2(0, 0)
 
 func _process(_delta: float) -> void:
 	var groups: Dictionary[Vector2, Array]= {}
@@ -34,10 +34,12 @@ func _process(_delta: float) -> void:
 
 
 func setup() -> void:
+	stack_offset.y -= font_size
 	for u in units:
 		var in_hp := in_hp_scene.instantiate()
 		add_child(in_hp)
 		
+		in_hp.set_font_size(font_size)
 		in_hp.unit = u
 		in_hp.set_unit_name("1")
 		in_hp.set_hp(u.hp_comp.hp, u.hp_comp.max_hp)

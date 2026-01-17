@@ -4,11 +4,11 @@ var units: Array[Unit]
 var teams: Node
 var map: TileMapLayer
 
-var size := 10
-var ally_color := Color.BLUE
-var enemy_color := Color.RED
-var turret_color := Color.WHEAT
-var turret_width: float = 2
+var size: float
+var ally_color: Color
+var enemy_color: Color
+var turret_color: Color
+var turret_width: float
 
 
 func _process(_delta: float) -> void:

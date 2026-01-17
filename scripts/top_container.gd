@@ -1,29 +1,37 @@
 extends HBoxContainer
 
+@export var score_container: PackedScene
+
 var score_size: float
 var cd_size: float
-
 var teams: Node
 
 var ally_score: HBoxContainer
 var enemy_score: HBoxContainer
 
-@export var score_container: PackedScene
-
 func setup() -> void:
 	add_theme_constant_override("separation", 20)
-	
-	ally_score = score_container.instantiate()
-	add_child(ally_score)
-	ally_score.set_sizes()
-	teams.ally.score_changed.connect(ally_score.set_score)
 
-	enemy_score = score_container.instantiate()
-	add_child(enemy_score)
-	enemy_score.set_sizes()
-	teams.enemy.score_changed.connect(enemy_score.set_score)
-	enemy_score.move_child(enemy_score.score_label, 0)
+	ally_score = _create_score(
+		teams.ally,
+		false
+	)
 
+	enemy_score = _create_score(
+		teams.enemy,
+		true
+	)
+
+func _create_score(team: Team, reverse: bool) -> HBoxContainer:
+	var score := score_container.instantiate()
+	add_child(score)
+	score.set_sizes(score_size, cd_size)
+	team.score_changed.connect(score.set_score)
+
+	if reverse:
+		score.move_child(score.score_label, 0)
+
+	return score
 
 func _process(_delta: float) -> void:
 	ally_score.set_cd(teams.ally.left_height_cd)

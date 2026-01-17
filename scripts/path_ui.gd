@@ -4,8 +4,8 @@ var units: Array[Unit]
 var teams: Node
 var map: TileMapLayer
 
-var line_color := Color.WHITE
-var line_width := 2
+var line_color: Color
+var line_width: float
 
 
 func setup() -> void:
