@@ -39,15 +39,18 @@ func setup() -> void:
 		add_child(in_hp)
 		
 		in_hp.unit = u
-		in_hp.set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
+		unit_to_ui[u] = in_hp
 		
 		u.hp_comp.hp_changed.connect(in_hp.set_hp)
 		u.attack_comp.reload_changed.connect(in_hp.set_reload)
 		
-		unit_to_ui[u] = in_hp
 		u.tree_exiting.connect(remove_unit.bind(u))
 	
 	apply_settings()
+	
+	for u in units:
+		unit_to_ui[u].set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
+		#print(unit_to_ui[u].hp_bar.visible)
 
 
 func remove_unit(u: Unit) -> void:
@@ -58,7 +61,7 @@ func remove_unit(u: Unit) -> void:
 func apply_settings() -> void:
 	var s := GlobalSettings.ui_settings
 	
-	var font_size := s.in_size
+	var font_size := s.in_font_size
 	var names := s.names
 	
 	stack_offset = base_stack_offset
@@ -67,6 +70,7 @@ func apply_settings() -> void:
 	for ui: HBoxContainer in unit_to_ui.values():
 		ui.set_font_size(font_size)
 	
+	apply_bar_settings()
 	apply_names(names)
 
 
@@ -83,3 +87,9 @@ func apply_names(names: Array) -> void:
 			ui.set_unit_name("")
 
 		indices[team_index] += 1
+
+
+func apply_bar_settings() -> void:
+	for u in units:
+		var is_ally := true if u.team == team else false
+		unit_to_ui[u].apply_bar_settings(is_ally)

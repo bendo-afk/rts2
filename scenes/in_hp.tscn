@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgn75wyj0yqda"]
+[gd_scene load_steps=4 format=3 uid="uid://cgn75wyj0yqda"]
 
 [ext_resource type="Script" uid="uid://cffvxjdfenywk" path="res://scripts/in_hp.gd" id="1_14lw5"]
+[ext_resource type="Script" uid="uid://dgwbyxk6tokfh" path="res://scripts/unattatched/delayed_bar.gd" id="2_fpeti"]
+[ext_resource type="Script" uid="uid://dqtbeg1et8amo" path="res://scripts/unattatched/immediate_bar.gd" id="3_g8h5l"]
 
 [node name="InHP" type="HBoxContainer"]
 offset_right = 40.0
@@ -10,8 +12,21 @@ script = ExtResource("1_14lw5")
 [node name="Name" type="Label" parent="."]
 layout_mode = 2
 
-[node name="HP" type="Label" parent="."]
+[node name="Bars" type="VBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Reload" type="Label" parent="."]
+[node name="HPBar" type="Control" parent="Bars"]
 layout_mode = 2
+script = ExtResource("2_fpeti")
+metadata/_custom_type_script = "uid://dgwbyxk6tokfh"
+
+[node name="HPLabel" type="Label" parent="Bars/HPBar"]
+layout_mode = 0
+offset_right = 1.0
+offset_bottom = 23.0
+
+[node name="ReloadBar" type="Control" parent="Bars"]
+layout_mode = 2
+script = ExtResource("3_g8h5l")
+metadata/_custom_type_script = "uid://dqtbeg1et8amo"
