@@ -19,3 +19,9 @@ func setup() -> void:
 	in_ui.units = units
 	in_ui.team = teams.ally
 	in_ui.setup()
+
+
+func apply_settings() -> void:
+	top_container.apply_settings()
+	sides_container.apply_settings()
+	in_ui.apply_settings()

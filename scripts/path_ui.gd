@@ -32,3 +32,8 @@ func v2i_to_v2(v2i: PackedVector2Array) -> PackedVector2Array:
 	for i in array_size:
 		v2_array[i] = map.map_to_local(v2i[i])
 	return v2_array
+
+
+func apply_settings() -> void:
+	line_color = GlobalSettings.ui_settings.path_color
+	line_width = GlobalSettings.ui_settings.path_width

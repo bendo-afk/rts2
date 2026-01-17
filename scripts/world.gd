@@ -33,7 +33,7 @@ func setup(ally_params: Array[Dictionary], enemy_params: Array[Dictionary]) -> v
 	ex_con.map = map
 	ex_con.teams = teams
 	
-	setup_ui()
+	world_ui.setup(units, teams, map)
 
 
 func _physics_process(delta: float) -> void:
@@ -42,16 +42,6 @@ func _physics_process(delta: float) -> void:
 	score_system.physics(delta)
 	vision_system.physics()
 	shoot_system.physics()
-
-
-func setup_ui() -> void:
-	for ui_node in world_ui.get_children(false):
-		ui_node.units = units
-		ui_node.teams = teams
-		ui_node.map = map
-
-	world_ui.path_ui.setup()
-	world_ui.ui_canvas.setup()
 
 
 func setup_units(params_arr: Array[Dictionary], team: Team) -> void:

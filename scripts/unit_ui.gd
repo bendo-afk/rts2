@@ -9,6 +9,7 @@ var ally_color: Color
 var enemy_color: Color
 var turret_color: Color
 var turret_width: float
+var turre_length: float = 1000
 
 
 func _process(_delta: float) -> void:
@@ -42,6 +43,14 @@ func draw_turret(u: Unit) -> void:
 	var margin: float = u.attack_comp.angle_margin
 	var pos := u.position
 
-	draw_line(pos, pos + 1000 * Vector2(cos(angle), sin(angle)), turret_color, turret_width, true)
-	draw_line(pos, pos + 1000 * Vector2(cos(angle + margin), sin(angle + margin)), turret_color, turret_width, true)
-	draw_line(pos, pos + 1000 * Vector2(cos(angle - margin), sin(angle - margin)), turret_color, turret_width, true)
+	draw_line(pos, pos + turre_length * Vector2(cos(angle), sin(angle)), turret_color, turret_width, true)
+	draw_line(pos, pos + turre_length * Vector2(cos(angle + margin), sin(angle + margin)), turret_color, turret_width, true)
+	draw_line(pos, pos + turre_length * Vector2(cos(angle - margin), sin(angle - margin)), turret_color, turret_width, true)
+
+
+func apply_settings() -> void:
+	size = GlobalSettings.ui_settings.unit_size
+	ally_color = GlobalSettings.ui_settings.ally_color
+	enemy_color = GlobalSettings.ui_settings.enemy_color
+	turret_color = GlobalSettings.ui_settings.turret_color
+	turret_width = GlobalSettings.ui_settings.turret_width

@@ -1,8 +1,5 @@
 extends Control
 
-var font_size: float
-var names: Array
-
 var units: Array[Unit]
 var team: Team
 
@@ -10,6 +7,7 @@ var unit_to_ui: Dictionary[Unit, HBoxContainer] = {}
 
 @export var in_hp_scene: PackedScene
 @export var stack_offset := Vector2(0, 0)
+@export var base_stack_offset := Vector2(0, 0)
 
 func _process(_delta: float) -> void:
 	var groups: Dictionary[Vector2, Array]= {}
@@ -36,13 +34,10 @@ func _process(_delta: float) -> void:
 
 
 func setup() -> void:
-	stack_offset.y -= font_size
-	var indices: Array = [0, 0]
 	for u in units:
 		var in_hp := in_hp_scene.instantiate()
 		add_child(in_hp)
 		
-		in_hp.set_font_size(font_size)
 		in_hp.unit = u
 		in_hp.set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
 		
@@ -51,12 +46,40 @@ func setup() -> void:
 		
 		unit_to_ui[u] = in_hp
 		u.tree_exiting.connect(remove_unit.bind(u))
-		
-		var team_index := 0 if u.team == team else 1
-		in_hp.set_unit_name(names[indices[team_index]])
-		indices[team_index] += 1
+	
+	apply_settings()
 
 
 func remove_unit(u: Unit) -> void:
 	unit_to_ui[u].queue_free()
 	unit_to_ui.erase(u)
+
+
+func apply_settings() -> void:
+	var s := GlobalSettings.ui_settings
+	
+	var font_size := s.in_size
+	var names := s.names
+	
+	stack_offset = base_stack_offset
+	stack_offset.y = - font_size
+	
+	for ui: HBoxContainer in unit_to_ui.values():
+		ui.set_font_size(font_size)
+	
+	apply_names(names)
+
+
+func apply_names(names: Array) -> void:
+	var indices := [0, 0]
+	
+	for u: Unit in unit_to_ui.keys():
+		var team_index := 0 if u.team == team else 1
+		var ui := unit_to_ui[u]
+
+		if indices[team_index] < names.size():
+			ui.set_unit_name(names[indices[team_index]])
+		else:
+			ui.set_unit_name("")
+
+		indices[team_index] += 1

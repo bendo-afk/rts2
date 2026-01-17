@@ -2,8 +2,8 @@ extends BarBase
 class_name DelayedBar
 
 var timer: float = 0
-var delayed_time: float = 1
 
+var delayed_time: float = 1
 var color: Color
 
 var delayed: ColorRect
