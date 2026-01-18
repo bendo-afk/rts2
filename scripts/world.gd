@@ -103,6 +103,7 @@ func setup_move() -> void:
 func setup_vision() -> void:
 	vision_system.margin_s = match_rule.s_margin
 	vision_system.margin_l = match_rule.l_margin
+	vision_system.setup()
 
 
 func setup_height() -> void:
