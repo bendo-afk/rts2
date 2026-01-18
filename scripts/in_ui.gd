@@ -50,7 +50,6 @@ func setup() -> void:
 	
 	for u in units:
 		unit_to_ui[u].set_hp(u.hp_comp.hp, u.hp_comp.max_hp)
-		#print(unit_to_ui[u].hp_bar.visible)
 
 
 func remove_unit(u: Unit) -> void:
@@ -66,10 +65,7 @@ func apply_settings() -> void:
 	
 	stack_offset = base_stack_offset
 	stack_offset.y = - font_size
-	
-	for ui: HBoxContainer in unit_to_ui.values():
-		ui.set_font_size(font_size)
-	
+		
 	apply_bar_settings()
 	apply_names(names)
 
@@ -91,5 +87,28 @@ func apply_names(names: Array) -> void:
 
 func apply_bar_settings() -> void:
 	for u in units:
-		var is_ally := true if u.team == team else false
-		unit_to_ui[u].apply_bar_settings(is_ally)
+		var is_ally := u.team == team
+		var ui := unit_to_ui[u]
+		ui.apply_bar_settings(is_ally)
+	
+	call_deferred("_apply_name_widths")
+
+
+func _apply_name_widths() -> void:
+	var ally_max := 0.0
+	var enemy_max := 0.0
+
+	for u in units:
+		var ui := unit_to_ui[u]
+		var w: float = ui.name_label.get_combined_minimum_size().x
+		if u.team == team:
+			ally_max = maxf(ally_max, w)
+		else:
+			enemy_max = maxf(enemy_max, w)
+
+	for u in units:
+		var ui := unit_to_ui[u]
+		if u.team == team:
+			ui.name_label.custom_minimum_size.x = ally_max
+		else:
+			ui.name_label.custom_minimum_size.x = enemy_max

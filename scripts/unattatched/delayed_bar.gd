@@ -3,7 +3,7 @@ class_name DelayedBar
 
 var timer: float = 0
 
-var delayed_time: float = 1
+var delayed_time: float = 2
 
 var delayed := ColorRect.new()
 
@@ -11,7 +11,7 @@ var delayed := ColorRect.new()
 func _ready() -> void:
 	super._ready()
 	add_child(delayed)
-	move_child(delayed, 1)
+	move_child(delayed, main.get_index())
 
 
 func _process(delta: float) -> void:
@@ -29,5 +29,6 @@ func set_ratio(r: float) -> void:
 
 func apply_delayed_settings(size_vec: Vector2, bg_color: Color, main_color: Color, delayed_alpha: float) -> void:
 	super.apply_settings(size_vec, bg_color, main_color)
+	delayed.size = size_vec
 	delayed.color = Color(main_color, delayed_alpha)
 	

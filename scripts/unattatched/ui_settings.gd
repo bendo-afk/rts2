@@ -5,10 +5,11 @@ var score_size: float = 40
 var cd_size: float = 30
 
 var bar_bg: Color = Color.DIM_GRAY
-var delayed_bar_alpha: float = 0.5
+var delayed_bar_alpha: float = 0.4
 
 var side_margin: float = 100
-var side_size: float = 20
+var side_font_size: int = 20
+var side_bar_x: float = 100
 
 var in_font_size: float = 30
 var in_bar_x: float = 100

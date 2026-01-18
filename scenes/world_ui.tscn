@@ -20,6 +20,14 @@ script = ExtResource("1_pvr84")
 [node name="UICanvas" type="CanvasLayer" parent="."]
 script = ExtResource("3_qemj2")
 
+[node name="InUI" type="Control" parent="UICanvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_ghh30")
+in_hp_scene = ExtResource("5_oyvde")
+
 [node name="TopContainer" type="HBoxContainer" parent="UICanvas"]
 anchors_preset = 5
 anchor_left = 0.5
@@ -38,14 +46,6 @@ anchor_right = 1.0
 grow_horizontal = 2
 script = ExtResource("5_ofelw")
 side_container_scene = ExtResource("5_ghh30")
-
-[node name="InUI" type="Control" parent="UICanvas"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("8_ghh30")
-in_hp_scene = ExtResource("5_oyvde")
 
 [node name="PathUI" type="Node2D" parent="."]
 script = ExtResource("3_topi3")

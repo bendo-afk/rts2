@@ -1,9 +1,5 @@
 extends Control
 
-var side_margin: float
-var side_size: float
-var names: Array
-
 var side_containers: Array[Node] = []
 
 var units: Array[Unit]
@@ -27,6 +23,7 @@ func create_side(team: Team, reverse: bool) -> Node:
 	
 	side_container.units = units
 	side_container.team = team
+	side_container.is_ally = not reverse
 	
 	side_container.setup()
 	
@@ -40,8 +37,6 @@ func create_side(team: Team, reverse: bool) -> Node:
 func apply_settings() -> void:
 	var s := GlobalSettings.ui_settings
 
-	side_margin = s.side_margin
-
 	for side_container in side_containers:
-		side_container.set_offset(Side.SIDE_TOP, side_margin)
+		side_container.set_offset(Side.SIDE_TOP, s.side_margin)
 		side_container.apply_settings()

@@ -3,13 +3,10 @@ extends HBoxContainer
 var unit: Unit
 
 @onready var name_label := $Name
+@onready var bars := $Bars
 @onready var hp_bar := $Bars/HPBar
 @onready var hp_label := $Bars/HPBar/HPLabel
-@onready var reload_bar := $Bars/ReloadBar
-
-
-func set_font_size(font_size: float) -> void:
-	name_label.add_theme_font_size_override("font_size", font_size)
+@onready var reload_bar := $Bars/ReloadBar	
 
 
 func follow(offset: Vector2) -> void:
@@ -19,7 +16,6 @@ func follow(offset: Vector2) -> void:
 
 func set_hp(hp: int, max_hp: int) -> void:
 	hp_bar.set_ratio(1.0 * hp / max_hp)
-	#hp_label.text = str(hp) + "/" + str(max_hp)
 	hp_label.text = str(hp)
 
 
@@ -48,3 +44,7 @@ func apply_bar_settings(is_ally: bool) -> void:
 	var reload_y := s.in_font_size * (1 - s.in_hp_ratio)
 	size_vec.y = reload_y
 	reload_bar.apply_settings(size_vec, s.bar_bg, s.in_reload_color)
+	
+	name_label.add_theme_font_size_override("font_size", s.in_font_size)
+	
+	bars.set_v_size_flags(Control.SIZE_SHRINK_CENTER)

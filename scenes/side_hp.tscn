@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx3ti4nru70j4"]
+[gd_scene load_steps=3 format=3 uid="uid://dx3ti4nru70j4"]
 
 [ext_resource type="Script" uid="uid://bk1gvm0567b7d" path="res://scripts/side_hp.gd" id="1_1clld"]
+[ext_resource type="Script" uid="uid://dgwbyxk6tokfh" path="res://scripts/unattatched/delayed_bar.gd" id="2_mkayn"]
 
 [node name="SideHP" type="HBoxContainer"]
 offset_right = 40.0
@@ -13,8 +14,17 @@ layout_mode = 2
 [node name="Parameters" type="Label" parent="."]
 layout_mode = 2
 
-[node name="HP" type="Label" parent="."]
+[node name="HPBar" type="Control" parent="."]
 layout_mode = 2
+script = ExtResource("2_mkayn")
+metadata/_custom_type_script = "uid://dgwbyxk6tokfh"
+
+[node name="HPLabel" type="Label" parent="HPBar"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 5.0
+offset_bottom = 31.0
 
 [node name="Reload" type="Label" parent="."]
 layout_mode = 2
