@@ -25,9 +25,8 @@ func physics() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_pressed("test"):
-		#print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
 		print("state", is_visible(units[0].position, map.map_to_local(Vector2i(3,3)), 0, 0))
-		#print(get_tiles_between(units[0].position, map.map_to_local(Vector2i(3,3))))
+
 
 func set_states() -> void:
 	for u in units:
@@ -44,6 +43,7 @@ func set_states() -> void:
 					if vis_state == CustomEnums.VisibleState.VISIBLE:
 						a.vision_comp.visible_enemies.append(e)
 						e.vision_comp.visible_enemies.append(a)
+
 
 func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 	tiles.cur1 = map.local_to_map(pos1)
@@ -83,7 +83,6 @@ func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 		tiles.cur1 = cands2.t1
 		if cands2.t2 != Vector2i.MIN:
 			tiles.cur2 = cands2.t2
-		
 
 
 func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
@@ -110,6 +109,7 @@ func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
 		tiles.cur1 = tiles.next1
 		tiles.cur2 = tiles.next2
 	return tiles_between
+
 
 func next_hexas(cur1: Vector2i, tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
 	var tile: Vector2i
@@ -139,9 +139,11 @@ func next_hexas(cur1: Vector2i, tiles: Tiles, pos1: Vector2, pos2: Vector2) -> v
 					elif tiles.next2 == Vector2i.MIN:
 						tiles.next2 = tile
 
+
 func turn(pos0: Vector2, pos1: Vector2, pos2: Vector2) -> int:
 	var cross := (pos1 - pos0).cross(pos2 - pos0)
 	return sign(cross)
+
 
 func get_vertex_pos(tile: Vector2i, index: int) -> Vector2:
 	var hsize: float = map.hsize
@@ -161,6 +163,7 @@ func get_vertex_pos(tile: Vector2i, index: int) -> Vector2:
 	if index == 5:
 		return center_pos + Vector2(-hsize/2.0,-vsize/4.0)
 	return Vector2.ZERO
+
 
 func get_adjacent_tile(tile: Vector2i, index: int) -> Vector2i:
 	var offsets: Array[Vector2i]
@@ -192,7 +195,6 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	if from_tile == to_tile:
 		return CustomEnums.VisibleState.VISIBLE
 	
-	
 	var tile1 := from_tile
 	var tile2 := to_tile
 	var height1 := unit_height1 + map.get_cell_source_id(tile1)
@@ -203,10 +205,8 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	
 	var tiles := Tiles.new()
 	first_step(tiles, from_pos, to_pos)
-	
-	
-	
-	
+
+
 	for i in range(1000):
 		if tiles.cur1 == to_tile or tiles.cur2 == to_tile:
 			break
@@ -231,7 +231,6 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 					return CustomEnums.VisibleState.NOT
 				min_margin = t_margin
 		
-	
 		tiles.next1 = Vector2i.MIN
 		tiles.next2 = Vector2i.MIN
 		next_hexas(tiles.cur1, tiles, from_pos, to_pos)
@@ -241,15 +240,11 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 		tiles.last2 = tiles.cur2
 		tiles.cur1 = tiles.next1
 		tiles.cur2 = tiles.next2
-		
-		
-
-
+	
 	if min_margin + margin_s < 0:
 		return CustomEnums.VisibleState.HALF
 	else:
 		return CustomEnums.VisibleState.VISIBLE
-
 
 
 func calc_dist(a: Vector2, b: Vector2) -> int:
