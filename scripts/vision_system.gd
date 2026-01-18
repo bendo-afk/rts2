@@ -52,73 +52,63 @@ func set_states() -> void:
 						e.vision_comp.visible_enemies.append(a)
 
 
-func first_step(tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
-	tiles.cur1 = map.local_to_map(pos1)
+func first_step(
+		last1: Vector2i,
+		last2: Vector2i,
+		cur1: Vector2i,
+		cur2: Vector2i,
+		_next1: Vector2i,
+		_next2: Vector2i,
+		pos1: Vector2,
+		pos2: Vector2) -> PackedVector2Array:
+	cur1 = map.local_to_map(pos1)
 	var to_tile := map.local_to_map(pos2)
 	var cands1 := Candidates.new()
 	var cands2 := Candidates.new()
-	tiles.last1 = tiles.cur1
+	last1 = cur1
 	for i in range(6):
-		var turn1: int = hex_grid_math.turn(pos1, pos2, hex_grid_math.get_vertex_pos(map.map_to_local(tiles.cur1), i))
-		var turn2: int = hex_grid_math.turn(pos1, pos2, hex_grid_math.get_vertex_pos(map.map_to_local(tiles.cur1), (i+1)%6 ))
+		var turn1: int = hex_grid_math.turn(pos1, pos2, hex_grid_math.get_vertex_pos(map.map_to_local(cur1), i))
+		var turn2: int = hex_grid_math.turn(pos1, pos2, hex_grid_math.get_vertex_pos(map.map_to_local(cur1), (i+1)%6 ))
 		if turn1 == 0 and turn2 == 0:
-			tiles.last2 = hex_grid_math.get_adjacent_tile(tiles.cur1, i)
-			var tile1: Vector2i = hex_grid_math.get_adjacent_tile(tiles.cur1, (i+1)%6)
-			var tile5: Vector2i = hex_grid_math.get_adjacent_tile(tiles.cur1, (i+5)%6)
+			last2 = hex_grid_math.get_adjacent_tile(cur1, i)
+			var tile1: Vector2i = hex_grid_math.get_adjacent_tile(cur1, (i+1)%6)
+			var tile5: Vector2i = hex_grid_math.get_adjacent_tile(cur1, (i+5)%6)
 			if hex_grid_math.calc_dist(to_tile, tile1) < hex_grid_math.calc_dist(to_tile, tile5):
-				tiles.cur1 = tile1
+				cur1 = tile1
 			else:
-				tiles.cur1 = tile5
-			return
+				cur1 = tile5
+			return [last1, last2, cur1, cur2]
 		elif turn1 * turn2 == -1:
 			if cands1.t1 == Vector2i.MIN:
-				cands1.t1 = hex_grid_math.get_adjacent_tile(tiles.cur1, i)
+				cands1.t1 = hex_grid_math.get_adjacent_tile(cur1, i)
 			else:
-				cands2.t1 = hex_grid_math.get_adjacent_tile(tiles.cur1, i)
+				cands2.t1 = hex_grid_math.get_adjacent_tile(cur1, i)
 		elif turn1 == 0:
 			if cands1.t1 == Vector2i.MIN:
-				cands1.t1 = hex_grid_math.get_adjacent_tile(tiles.cur1, (i+5)%6)
-				cands1.t2 = hex_grid_math.get_adjacent_tile(tiles.cur1, i)
+				cands1.t1 = hex_grid_math.get_adjacent_tile(cur1, (i+5)%6)
+				cands1.t2 = hex_grid_math.get_adjacent_tile(cur1, i)
 			else:
-				cands2.t1 = hex_grid_math.get_adjacent_tile(tiles.cur1, (i+5)%6)
-				cands2.t2 = hex_grid_math.get_adjacent_tile(tiles.cur1, i)
+				cands2.t1 = hex_grid_math.get_adjacent_tile(cur1, (i+5)%6)
+				cands2.t2 = hex_grid_math.get_adjacent_tile(cur1, i)
 	if hex_grid_math.calc_dist(to_tile, cands1.t1) < hex_grid_math.calc_dist(to_tile, cands2.t1):
-		tiles.cur1 = cands1.t1
+		cur1 = cands1.t1
 		if cands1.t2 != Vector2i.MIN:
-			tiles.cur2 = cands1.t2
+			cur2 = cands1.t2
 	else:
-		tiles.cur1 = cands2.t1
+		cur1 = cands2.t1
 		if cands2.t2 != Vector2i.MIN:
-			tiles.cur2 = cands2.t2
+			cur2 = cands2.t2
+	return [last1, last2, cur1, cur2]
 
-
-func get_tiles_between(from_pos: Vector2, to_pos: Vector2) -> Array:
-	var to_tile := map.local_to_map(to_pos)
-	
-	var tiles := Tiles.new()
-	first_step(tiles, from_pos, to_pos)
-	
-	var tiles_between := []
-	while true:
-		
-		tiles_between.append(tiles.cur1)
-		if tiles.cur2 != Vector2i.MIN:
-			tiles_between.append(tiles.cur2)
-		if tiles.cur1 == to_tile or tiles.cur2 == to_tile:
-			break
-		tiles.next1 = Vector2i.MIN
-		tiles.next2 = Vector2i.MIN
-		next_hexas(tiles.cur1, tiles, from_pos, to_pos)
-		if tiles.cur2 != Vector2i.MIN:
-			next_hexas(tiles.cur2, tiles, from_pos, to_pos)
-		tiles.last1 = tiles.cur1
-		tiles.last2 = tiles.cur2
-		tiles.cur1 = tiles.next1
-		tiles.cur2 = tiles.next2
-	return tiles_between
-
-
-func next_hexas(cur1: Vector2i, tiles: Tiles, pos1: Vector2, pos2: Vector2) -> void:
+func next_hexas(
+		last1: Vector2i,
+		last2: Vector2i,
+		cur1: Vector2i,
+		cur2: Vector2i,
+		next1: Vector2i,
+		next2: Vector2i,
+		pos1: Vector2,
+		pos2: Vector2) -> PackedVector2Array:
 	var tile: Vector2i
 	
 	for i in range(6):
@@ -126,74 +116,26 @@ func next_hexas(cur1: Vector2i, tiles: Tiles, pos1: Vector2, pos2: Vector2) -> v
 		var turn2: int = hex_grid_math.turn(pos1, pos2, hex_grid_math.get_vertex_pos(map.map_to_local(cur1), (i+1)%6 ))
 		if (turn1 == 0 or turn2 == 0 or turn1 != turn2):
 			tile = hex_grid_math.get_adjacent_tile(cur1, i)
-			if (tile != tiles.cur1 and tile != tiles.cur2 and tile != tiles.next1 and tile != tiles.next2 and tile != tiles.last1 and tile != tiles.last2):
-				if tiles.next1 == Vector2i.MIN:
-					tiles.next1 = tile
-				elif tiles.next2 == Vector2i.MIN:
-					tiles.next2 = tile
+			if (tile != cur1 and tile != cur2 and tile != next1 and tile != next2 and tile != last1 and tile != last2):
+				if next1 == Vector2i.MIN:
+					next1 = tile
+				elif next2 == Vector2i.MIN:
+					next2 = tile
 			if turn1 == 0:
 				tile = hex_grid_math.get_adjacent_tile(cur1, (i + 5) % 6)
-				if (tile != tiles.cur1 and tile != tiles.cur2 and tile != tiles.next1 and tile != tiles.next2 and tile != tiles.last1 and tile != tiles.last2):
-					if tiles.next1 == Vector2i.MIN:
-						tiles.next1 = tile
-					elif tiles.next2 == Vector2i.MIN:
-						tiles.next2 = tile
+				if (tile != cur1 and tile != cur2 and tile != next1 and tile != next2 and tile != last1 and tile != last2):
+					if next1 == Vector2i.MIN:
+						next1 = tile
+					elif next2 == Vector2i.MIN:
+						next2 = tile
 			if turn2 == 0:
 				tile = hex_grid_math.get_adjacent_tile(cur1, (i + 1) % 6)
-				if (tile != tiles.cur1 and tile != tiles.cur2 and tile != tiles.next1 and tile != tiles.next2 and tile != tiles.last1 and tile != tiles.last2):
-					if tiles.next1 == Vector2i.MIN:
-						tiles.next1 = tile
-					elif tiles.next2 == Vector2i.MIN:
-						tiles.next2 = tile
-
-
-#func turn(pos0: Vector2, pos1: Vector2, pos2: Vector2) -> int:
-	#var cross := (pos1 - pos0).cross(pos2 - pos0)
-	#return sign(cross)
-
-
-#func get_vertex_pos(tile: Vector2i, index: int) -> Vector2:
-	#var hsize: float = map.hsize
-	#var vsize: float = map.vsize
-	#var center_pos := map.map_to_local(tile)
-	#
-	#if index == 0:
-		#return center_pos + Vector2(0,-vsize/2.0)
-	#if index == 1:
-		#return center_pos + Vector2(hsize/2.0,-vsize/4.0)
-	#if index == 2:
-		#return center_pos + Vector2(hsize/2.0,vsize/4.0)
-	#if index == 3:
-		#return center_pos + Vector2(0,vsize/2.0)
-	#if index == 4:
-		#return center_pos + Vector2(-hsize/2.0,vsize/4.0)
-	#if index == 5:
-		#return center_pos + Vector2(-hsize/2.0,-vsize/4.0)
-	#return Vector2.ZERO
-
-
-#func get_adjacent_tile(tile: Vector2i, index: int) -> Vector2i:
-	#var offsets: Array[Vector2i]
-	#if tile.y % 2:
-		#offsets = [
-			#Vector2(1, -1),
-			#Vector2(1, 0),
-			#Vector2(1, 1),
-			#Vector2(0, 1),
-			#Vector2(-1, 0),
-			#Vector2(0, -1)
-		#]
-	#else:
-		#offsets = [
-			#Vector2(0, -1),
-			#Vector2(1, 0),
-			#Vector2(0, 1),
-			#Vector2(-1, 1),
-			#Vector2(-1, 0),
-			#Vector2(-1, -1)
-		#]
-	#return tile + offsets[index]
-
+				if (tile != cur1 and tile != cur2 and tile != next1 and tile != next2 and tile != last1 and tile != last2):
+					if next1 == Vector2i.MIN:
+						next1 = tile
+					elif next2 == Vector2i.MIN:
+						next2 = tile
+	return [last1, last2]
 
 func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_height2: float) -> CustomEnums.VisibleState:
 	var to_tile := map.local_to_map(to_pos)
@@ -210,15 +152,29 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 	
 	var min_margin := INF
 	
-	var tiles := Tiles.new()
-	first_step(tiles, from_pos, to_pos)
+	var last1 := Vector2i.MIN
+	var last2 := Vector2i.MIN
+	var cur1 := Vector2i.MIN
+	var cur2 := Vector2i.MIN
+	var next1 := Vector2i.MIN
+	var next2 := Vector2i.MIN
+	var arr: PackedVector2Array= [last1, last2, cur1, cur2]
+	arr = first_step(
+			last1,
+			last2,
+			cur1,
+			cur2,
+			next1,
+			next2,
+			from_pos,
+			to_pos)
 
 
 	for i in range(1000):
-		if tiles.cur1 == to_tile or tiles.cur2 == to_tile:
+		if cur1 == to_tile or cur2 == to_tile:
 			break
 		# next1 は必ず評価
-		var n := tiles.cur1
+		var n := cur1
 		var t_height := map.get_cell_source_id(n)
 		var t_dist := hex_grid_math.calc_dist(tile1, n)
 		var t_margin := (slope * t_dist) + height1 - t_height
@@ -228,8 +184,8 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 			min_margin = t_margin
 
 		# next2 は存在するときだけ
-		if tiles.cur2 != Vector2i.MIN:
-			n = tiles.cur2
+		if cur2 != Vector2i.MIN:
+			n = cur2
 			t_height = map.get_cell_source_id(n)
 			t_dist = hex_grid_math.calc_dist(tile1, n)
 			t_margin = (slope * t_dist) + height1 - t_height
@@ -238,32 +194,33 @@ func is_visible(from_pos: Vector2, to_pos: Vector2, unit_height1: float, unit_he
 					return CustomEnums.VisibleState.NOT
 				min_margin = t_margin
 		
-		tiles.next1 = Vector2i.MIN
-		tiles.next2 = Vector2i.MIN
-		next_hexas(tiles.cur1, tiles, from_pos, to_pos)
-		if tiles.cur2 != Vector2i.MIN:
-			next_hexas(tiles.cur2, tiles, from_pos, to_pos)
-		tiles.last1 = tiles.cur1
-		tiles.last2 = tiles.cur2
-		tiles.cur1 = tiles.next1
-		tiles.cur2 = tiles.next2
+		next1 = Vector2i.MIN
+		next2 = Vector2i.MIN
+		next_hexas(
+			last1,
+			last2,
+			cur1,
+			cur2,
+			next1,
+			next2,
+			from_pos,
+			to_pos)
+		if cur2 != Vector2i.MIN:
+			next_hexas(
+			last1,
+			last2,
+			cur2,
+			cur1,
+			next1,
+			next2,
+			from_pos,
+			to_pos)
+		last1 = cur1
+		last2 = cur2
+		cur1 = next1
+		cur2 = next2
 	
 	if min_margin + margin_s < 0:
 		return CustomEnums.VisibleState.HALF
 	else:
 		return CustomEnums.VisibleState.VISIBLE
-
-#
-#func calc_dist(a: Vector2, b: Vector2) -> int:
-	#var ac := oddr_to_axial(a)
-	#var bc := oddr_to_axial(b)
-	#return axial_dist(ac, bc)
-#
-#func oddr_to_axial(tile: Vector2i) -> Vector2i:
-	#var parity := tile.y&1
-	#var q := int(tile.x - (tile.y - parity) / 2.0)
-	#var r := tile.y
-	#return Vector2i(q, r)
-#
-#func axial_dist(a: Vector2i, b: Vector2i) -> int:
-	#return (abs(a.x - b.x) + abs(a.x + a.y - b.x - b.y) + abs(a.y - b.y)) /2
