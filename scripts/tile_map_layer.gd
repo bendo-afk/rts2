@@ -56,8 +56,8 @@ func setup_map() -> void:
 	if map_mode == CustomEnums.MapSymmetry.POINT:
 		for y in range(n_y):
 			for x in range(n_x - y):
-				#var height := get_rand_height(x, y)
-				var height := 2
+				var height := get_rand_height(x, y)
+				#var height := 2
 				set_tile(x, y, height)
 				set_tile(n_x - 1 - x, n_y - 1 - y, height)
 	elif map_mode == CustomEnums.MapSymmetry.LINE:
